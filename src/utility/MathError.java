@@ -10,8 +10,9 @@ public class MathError extends Exception{
 
     public static final String DIVISION_BY_ZERO_ERROR = "{ERROR} : division by zero is not possible";
     public static final String NULL_POINTER_EXCEPTION = "{ERROR} : null pointer exception";
-
-    public static void init(){}
+    public static final String NON_INTRACTABLE_INTERACTION = "{ERROR} : The give objects can not interact each other";
+    public static final String INCORRECT_ARGUMENTS = "{ERROR} : incorrect arguments...";
+    public static final String INDEX_OUT_OF_BOUND = "{ERROR} : the given Index is out of bound...";
 
     public MathError(){
         super();
