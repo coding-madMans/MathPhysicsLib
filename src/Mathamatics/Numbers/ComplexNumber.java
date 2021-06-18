@@ -26,6 +26,16 @@ public class ComplexNumber extends NumberClass implements NumberSystem{
         this.imaginary = imaginary;
     }
 
+    public ComplexNumber(int real, int imaginary){
+        this.real = real;
+        this.imaginary = imaginary;
+    }
+
+    public ComplexNumber(long real, long imaginary){
+        this.real = real;
+        this.imaginary = imaginary;
+    }
+
     @Override
     protected String repr() {
         return this.real + " + i" + this.imaginary + " ";

@@ -21,6 +21,16 @@ public class PolarNumber extends NumberClass implements  NumberSystem{
         this.angle = angle;
     }
 
+    public PolarNumber(int radius, int angle){
+        this.radius = radius;
+        this.angle = angle;
+    }
+
+    public PolarNumber(long radius, long angle){
+        this.radius = radius;
+        this.angle = angle;
+    }
+
     @Override
     protected String repr() {
         return this.radius + " + r " + this.angle;

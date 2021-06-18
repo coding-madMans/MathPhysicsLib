@@ -13,6 +13,7 @@ public class MathError extends Exception{
     public static final String NON_INTRACTABLE_INTERACTION = "{ERROR} : The give objects can not interact each other";
     public static final String INCORRECT_ARGUMENTS = "{ERROR} : incorrect arguments...";
     public static final String INDEX_OUT_OF_BOUND = "{ERROR} : the given Index is out of bound...";
+    public static final String WRONG_PARAMETERS = "{ERROR} : the given parameters are wrong...";
 
     public MathError(){
         super();
