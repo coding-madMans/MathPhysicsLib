@@ -43,14 +43,7 @@ public class ComplexNumber extends NumberClass implements NumberSystem{
 
     @Override
     public NumberSystem add(NumberSystem other) throws MathError {
-        if(other == null){
-            throw new MathError(MathError.NULL_POINTER_EXCEPTION);
-        }
-        if(!other.getClassName().equals(this.getClassName())){
-            throw  new MathError(MathError.NON_INTRACTABLE_INTERACTION);
-        }
-        ComplexNumber temp = (ComplexNumber) other;
-        return new ComplexNumber(this.real + temp.real, this.imaginary + temp.imaginary);
+        return this.add(other, false);
     }
 
     @Override
@@ -72,11 +65,7 @@ public class ComplexNumber extends NumberClass implements NumberSystem{
 
     @Override
     public NumberSystem sub(NumberSystem other) throws MathError {
-        if(!other.getClassName().equals(this.getClassName())){
-            throw  new MathError(MathError.NON_INTRACTABLE_INTERACTION);
-        }
-        ComplexNumber temp = (ComplexNumber) other;
-        return new ComplexNumber(this.real - temp.real, this.imaginary - temp.imaginary);
+        return this.sub(other, false);
     }
 
     @Override
@@ -98,16 +87,7 @@ public class ComplexNumber extends NumberClass implements NumberSystem{
 
     @Override
     public NumberSystem mul(NumberSystem other) throws MathError {
-        if(other == null){
-            throw new MathError(MathError.NULL_POINTER_EXCEPTION);
-        }
-        if(!other.getClassName().equals(this.getClassName())){
-            throw  new MathError(MathError.NON_INTRACTABLE_INTERACTION);
-            // as of now this part is true..
-        }
-        ComplexNumber temp = (ComplexNumber) other;
-        return new ComplexNumber((this.real * temp.real) - (this.imaginary * temp.imaginary),
-                (this.real * temp.imaginary) + (this.imaginary * temp.real));
+        return this.mul(other, false);
     }
 
     @Override
@@ -132,18 +112,7 @@ public class ComplexNumber extends NumberClass implements NumberSystem{
 
     @Override
     public NumberSystem div(NumberSystem other) throws MathError {
-        if(other == null){
-            throw new MathError(MathError.NULL_POINTER_EXCEPTION);
-        }
-        if(!other.getClassName().equals(this.getClassName())){
-            throw  new MathError(MathError.NON_INTRACTABLE_INTERACTION);
-        }
-        ComplexNumber temp = (ComplexNumber) other;
-        double d = (temp.real * temp.real) + (temp.imaginary * temp.imaginary);
-        if(d == 0.0){
-            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
-        }
-        return new ComplexNumber((this.real * temp.real) / d, (this.imaginary * temp.imaginary) / d);
+        return this.div(other, false);
     }
 
     @Override
@@ -170,7 +139,7 @@ public class ComplexNumber extends NumberClass implements NumberSystem{
 
     @Override
     public NumberSystem inv() {
-        return new ComplexNumber(this.real * -1.0, this.imaginary * -1.0);
+        return this.inv(false);
     }
 
     @Override

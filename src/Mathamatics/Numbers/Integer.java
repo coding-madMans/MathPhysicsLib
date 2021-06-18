@@ -27,14 +27,7 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
 
     @Override
     public NumberSystem add(NumberSystem other) throws MathError {
-        if(other == null){
-            throw new MathError(MathError.NULL_POINTER_EXCEPTION);
-        }
-        if(other.getClassName().equals(ComplexNumber.class.getName())||other.getClassName().equals(PolarNumber.class.getName())){
-            throw  new MathError(MathError.NON_INTRACTABLE_INTERACTION);
-        }
-        RealNumbers temp = (RealNumbers)other;
-        return new Integer(this.num + temp.getAsInt());
+        return this.add(other, false);
     }
 
     @Override
@@ -55,14 +48,7 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
 
     @Override
     public NumberSystem sub(NumberSystem other) throws MathError {
-        if(other == null){
-            throw new MathError(MathError.NULL_POINTER_EXCEPTION);
-        }
-        if(other.getClassName().equals(ComplexNumber.class.getName())||other.getClassName().equals(PolarNumber.class.getName())){
-            throw  new MathError(MathError.NON_INTRACTABLE_INTERACTION);
-        }
-        RealNumbers temp = (RealNumbers)other;
-        return new Integer(this.num - temp.getAsInt());
+        return this.sub(other, false);
     }
 
     @Override
@@ -83,14 +69,7 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
 
     @Override
     public NumberSystem mul(NumberSystem other) throws MathError {
-        if(other == null){
-            throw new MathError(MathError.NULL_POINTER_EXCEPTION);
-        }
-        if(other.getClassName().equals(ComplexNumber.class.getName())||other.getClassName().equals(PolarNumber.class.getName())){
-            return other.mul(this);
-        }
-        RealNumbers temp = (RealNumbers)other;
-        return new Integer(this.num * temp.getAsInt());
+        return this.mul(other, false);
     }
 
     @Override
@@ -112,17 +91,7 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
 
     @Override
     public NumberSystem div(NumberSystem other) throws MathError {
-        if(other == null){
-            throw new MathError(MathError.NULL_POINTER_EXCEPTION);
-        }
-        if(other.getClassName().equals(ComplexNumber.class.getName())||other.getClassName().equals(PolarNumber.class.getName())){
-            return other.div(this);
-        }
-        RealNumbers temp = (RealNumbers)other;
-        if(temp.getAsInt() == 0){
-            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
-        }
-        return new Integer(this.num / temp.getAsInt());
+        return this.div(other, false);
     }
 
     @Override
@@ -147,7 +116,7 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
 
     @Override
     public NumberSystem inv() {
-        return new Integer(this.num * -1);
+        return this.inv(false);
     }
 
     @Override

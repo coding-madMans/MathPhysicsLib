@@ -38,7 +38,7 @@ public class PolarNumber extends NumberClass implements  NumberSystem{
 
     @Override
     public NumberSystem add(NumberSystem other) throws MathError {
-        return null;
+        return this.add(other, false);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class PolarNumber extends NumberClass implements  NumberSystem{
 
     @Override
     public NumberSystem sub(NumberSystem other) throws MathError {
-        return null;
+        return this.sub(other, false);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class PolarNumber extends NumberClass implements  NumberSystem{
 
     @Override
     public NumberSystem mul(NumberSystem other) throws MathError {
-        return null;
+        return this.mul(other, false);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class PolarNumber extends NumberClass implements  NumberSystem{
 
     @Override
     public NumberSystem div(NumberSystem other) throws MathError {
-        return null;
+        return this.div(other, false);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class PolarNumber extends NumberClass implements  NumberSystem{
 
     @Override
     public NumberSystem inv() {
-        return null;
+        return this.inv(false);
     }
 
     @Override
