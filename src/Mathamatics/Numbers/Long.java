@@ -1,35 +1,21 @@
 package Mathamatics.Numbers;
-
 import utility.MathError;
-
-
-public class Float extends NumberClass implements NumberSystem,RealNumbers{
-
-    private float num;
-
-    public Float()
-    {
-        num = 0.0f;
+public class Long extends NumberClass implements NumberSystem,RealNumbers {
+    private long num;
+    public Long(){
+        num = 0L;
     }
-
-    public Float(float num)
-    {
+    public Long(int num){
+        this.num = (long)num;
+    }
+    public Long(float num){
+        this.num = (long) num;
+    }
+    public Long(double num){
+        this.num = (long) num;
+    }
+    public Long(long num){
         this.num = num;
-    }
-
-    public Float(int num)
-    {
-        this.num = (float)num;
-    }
-
-    public Float(double num)
-    {
-        this.num = (float)num;
-    }
-
-    public Float(long num)
-    {
-        this.num = (float)num;
     }
 
     @Override
@@ -46,7 +32,7 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
             throw  new MathError(MathError.NON_INTRACTABLE_INTERACTION);
         }
         RealNumbers temp = (RealNumbers)other;
-        return new Float(this.num + temp.getAsFloat());
+        return new Long(this.num + temp.getAsLong());
     }
 
     @Override
@@ -59,10 +45,10 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
         }
         RealNumbers temp = (RealNumbers)other;
         if(writeBack){
-            this.num += temp.getAsFloat();
+            this.num += temp.getAsLong();
             return this;
         }
-        return new Float(this.num + temp.getAsFloat());
+        return new Long(this.num + temp.getAsLong());
     }
 
     @Override
@@ -74,7 +60,7 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
             throw  new MathError(MathError.NON_INTRACTABLE_INTERACTION);
         }
         RealNumbers temp = (RealNumbers)other;
-        return new Float(this.num - temp.getAsFloat());
+        return new Long(this.num - temp.getAsLong());
     }
 
     @Override
@@ -87,10 +73,10 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
         }
         RealNumbers temp = (RealNumbers)other;
         if(writeBack){
-            this.num -= temp.getAsFloat();
+            this.num -= temp.getAsLong();
             return this;
         }
-        return new Float(this.num - temp.getAsFloat());
+        return new Long(this.num - temp.getAsLong());
     }
 
     @Override
@@ -102,7 +88,7 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
             return other.mul(this);
         }
         RealNumbers temp = (RealNumbers)other;
-        return new Float(this.num * temp.getAsFloat());
+        return new Long(this.num * temp.getAsLong());
     }
 
     @Override
@@ -115,11 +101,11 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
         }
         RealNumbers temp = (RealNumbers)other;
         if(writeBack){
-            this.num *= temp.getAsFloat();
+            this.num *= temp.getAsLong();
             return this;
         }
-        return new Float(this.num * temp.getAsFloat());
-        }
+        return new Long(this.num * temp.getAsLong());
+    }
 
 
     @Override
@@ -131,10 +117,10 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
             return other.div(this);
         }
         RealNumbers temp = (RealNumbers)other;
-        if(temp.getAsFloat() == 0.0f){
+        if(temp.getAsLong() == 0L){
             throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
         }
-        return new Float(this.num / temp.getAsFloat());
+        return new Long(this.num / temp.getAsLong());
     }
 
     @Override
@@ -146,50 +132,50 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
             return other.div(this,writeBack);
         }
         RealNumbers temp = (RealNumbers)other;
-        if(temp.getAsFloat() == 0.0f){
+        if(temp.getAsLong() == 0L){
             throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
         }
         if(writeBack){
-            this.num /= temp.getAsFloat();
+            this.num /= temp.getAsLong();
             return this;
         }else{
-            return new Float(this.num / temp.getAsFloat());
+            return new Long(this.num / temp.getAsLong());
         }
     }
 
     @Override
     public NumberSystem inv() {
-        return new Float(this.num * -1.0f);
+        return new Long(this.num * -1L);
     }
 
     @Override
     public NumberSystem inv(boolean writeBack) {
         if(writeBack){
-            this.num *= -1.0f;
+            this.num *= -1;
             return this;
         }else{
-            return new Float(this.num * -1.0f);
+            return new Long(this.num * -1L);
         }
     }
 
     @Override
     public NumberSystem Clone() {
-        return new Float(this.num);
+        return new Long(this.num);
     }
 
     @Override
     public NumberSystem getZeroValue() {
-        return new Float();
+        return new Long();
     }
 
     @Override
     public NumberSystem getUnitValue() {
-        return new Float( 1.0f);
+        return new Long( 1L);
     }
 
     @Override
     public String getClassName() {
-        return Float.class.getName();
+        return Long.class.getName();
     }
 
 
@@ -210,6 +196,6 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
 
     @Override
     public long getAsLong() {
-        return (long)this.num;
+        return this.num;
     }
 }
