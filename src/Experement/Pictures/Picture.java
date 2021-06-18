@@ -1,5 +1,7 @@
 package Experement.Pictures;
 
+import Mathamatics.Plane.ComplexPlane;
+import Mathamatics.Plane.PolarPlane;
 import Mathamatics.Plane.Plane;
 
 import javax.imageio.ImageIO;
@@ -17,8 +19,8 @@ public class Picture {
     private final String fileName;
 
     public static void init(){
-        Picture.pictureWidth = 768;
-        Picture.pictureHeight = 1366;
+        Picture.pictureWidth = 1366;
+        Picture.pictureHeight = 768;
     }
 
     public static void init(int pictureWidth, int pictureHeight){
@@ -30,7 +32,7 @@ public class Picture {
         this.plane = plane;
         this.width = width;
         this.height = height;
-        this.fileName = "res/MyPlane.png";
+        this.fileName = "res/experement/MyPlane.png";
 
         this.image = new BufferedImage(Picture.pictureWidth, Picture.pictureHeight, BufferedImage.TYPE_INT_RGB);
     }
@@ -39,7 +41,7 @@ public class Picture {
         this.plane = plane;
         this.width = width;
         this.height = height;
-        this.fileName = "res\\" + fileName;
+        this.fileName = "res\\experement\\" + fileName;
 
         this.image = new BufferedImage(Picture.pictureWidth, Picture.pictureHeight, BufferedImage.TYPE_INT_RGB);
     }
@@ -47,17 +49,48 @@ public class Picture {
     public void generatePicture(){
         File img = null;
 
-        float freq = 0.02f;
+        int r, g, b, p;
 
-        for(int y = 0; y < Picture.pictureHeight; y++){
-            for(int x = 0; x < Picture.pictureWidth; x++){
-                int r = (int) ((Math.sin(x * freq) + Math.sin(y * freq)) * 100);
-                int g = (int) ((Math.sin(x * freq)) * 100);
-                int b = (int) ((Math.sin(y * freq)) * 100);
+        if(this.plane == null){
+            for(int y = 0; y < Picture.pictureHeight; y++){
+                for(int x = 0; x < Picture.pictureWidth; x++){
+                    r = 255;
+                    g = 255;
+                    b = 255;
 
-                int p = (r << 16) | (g << 8) | b;
+                    p = (r << 16) | (g << 8) | b;
 
-                this.image.setRGB(x, y ,p);
+                    this.image.setRGB(x, y ,p);
+                }
+            }
+        }else {
+
+            String planeType = this.plane.getPlaneName();
+
+            if (planeType.equals(ComplexPlane.class.getName())) {
+                for (int y = 0; y < Picture.pictureHeight; y++) {
+                    for (int x = 0; x < Picture.pictureWidth; x++) {
+                        r = 255;
+                        g = 255;
+                        b = 255;
+
+                        p = (r << 16) | (g << 8) | b;
+
+                        this.image.setRGB(x, y, p);
+                    }
+                }
+            } else if (planeType.equals(PolarPlane.class.getName())) {
+                for (int y = 0; y < Picture.pictureHeight; y++) {
+                    for (int x = 0; x < Picture.pictureWidth; x++) {
+                        r = 255;
+                        g = 255;
+                        b = 255;
+
+                        p = (r << 16) | (g << 8) | b;
+
+                        this.image.setRGB(x, y, p);
+                    }
+                }
             }
         }
 
