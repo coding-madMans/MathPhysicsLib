@@ -6,8 +6,32 @@ import Mathamatics.Numbers.Integer;
 import Mathamatics.Numbers.NumberClass;
 
 public class Func {
-    public double hypotenuse=0.0, adjacent=0.0, opposite=0.0;
 
+    public static double factorial(double num){
+        if(num==1 || num==0){
+            return 1;
+        }
+        return (num*factorial(num-1));
+    }
+    public static double Pow(double base,double power){
+        int i;
+        double ans=1;
+        for(i=0;i<power;i++){
+            ans = ans*base;
+        }
+        return ans;
+    }
+    public static double Sqrt(double number){
+        double root = 1;
+        int i = 0;
+        while (true)
+        {
+            i = i + 1;
+            root = (number / root + root) / 2;
+            if (i == number + 1) { break; }
+        }
+        return root;
+    }
     public static double Sin(double deg) {
 
         if (deg == Double.Negative_Infinity || !(deg < Double.Positive_Infinity)) {
@@ -47,13 +71,33 @@ public class Func {
         final int PRECISION = 85;
         double temp = 0;
         for (int i = 0; i <= PRECISION; i++) {
-            temp += Math.pow(-1, i) * (Math.pow(a, 2 * i + 1) / Factorial.factorial(2 * i + 1));
+            temp += Math.pow(-1, i) * (Math.pow(a, 2 * i + 1) / factorial(2 * i + 1));
         }
 
         return (sign * temp);
 
     }
+    public static double Cos(double deg){
+        double a = 90-deg;
+        return (Sin(a));
+    }
+    public static double Tan(double deg){
+        return(Sin(deg)/Cos(deg));
+    }
+    public static double Cosec(double deg){
+        return(1/Sin(deg));
+    }
+    public static double Sec(double deg){
+        return(1/Cos(deg));
+    }
+    public static double Cot(double deg){
+        return(1/Tan(deg));
+    }
+
     public static void main(String args[]){
-        System.out.print(Sin(90));
+        System.out.println(Cosec(90));
+        System.out.println(Sec(0));
+        System.out.println(Cot(45));
+        System.out.println(Sqrt(4));
     }
 }
