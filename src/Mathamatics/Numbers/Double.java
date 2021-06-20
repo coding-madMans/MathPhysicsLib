@@ -31,6 +31,9 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
         this.num = (double)num;
     }
 
+    public static double Negative_Infinity = -1f/0f;
+    public static double Positive_Infinity = 1f/0f;
+    public static double NaN = 0f/0f;
 
     @Override
     protected String repr() {

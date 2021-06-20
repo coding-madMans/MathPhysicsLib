@@ -18,6 +18,7 @@ public class Long extends NumberClass implements NumberSystem,RealNumbers {
         this.num = num;
     }
 
+
     @Override
     protected String repr() {
         return this.num + " ";
