@@ -1,11 +1,13 @@
 package Mathamatics.BasicFormulas;
 import java.lang.Math;
-
 import Mathamatics.Numbers.Double;
-import Mathamatics.Numbers.Integer;
-import Mathamatics.Numbers.NumberClass;
+
 
 public class Func {
+
+    //BY VISHAL
+    static double PI =  3.14159265358979323846;
+    static double e = 2.7182818284590452353602;
 
     public static double factorial(double num){
         if(num==1 || num==0){
@@ -13,14 +15,27 @@ public class Func {
         }
         return (num*factorial(num-1));
     }
-    public static double Pow(double base,double power){
-        int i;
-        double ans=1;
-        for(i=0;i<power;i++){
-            ans = ans*base;
+
+    public static double Abs(double num)
+    {
+        if(num >= 0){
+            return num;
         }
-        return ans;
+        return -num;
     }
+
+    public static double Pow(double base,double power){
+        double ans=1;
+        for (int i = 0; i < Abs(power); i++) {
+                ans = ans * base;
+        }
+        if(power >= 0.0) {
+        return ans;
+        }
+        return (1/ans);
+
+    }
+
     public static double Sqrt(double number){
         double root = 1;
         int i = 0;
@@ -32,6 +47,7 @@ public class Func {
         }
         return root;
     }
+
     public static double Sin(double deg) {
 
         if (deg == Double.Negative_Infinity || !(deg < Double.Positive_Infinity)) {
@@ -40,7 +56,6 @@ public class Func {
 
         // If you can't use Math.PI neither,
         // you'll have to create your own PI
-        final double PI = 3.14159265358979323846;
         double a = (deg*PI)/180;
         // Fix the domain for a...
 
@@ -91,13 +106,134 @@ public class Func {
         return(1/Cos(deg));
     }
     public static double Cot(double deg){
-        return(1/Tan(deg));
+        return(Cos(deg)/Sin(deg));
+    }
+
+    // BY SUPRITH
+
+    public static double Exp(double num)
+    {
+        return Pow(e,num);
+    }
+
+    public static double Sinh(double deg)
+    {
+        return ((Exp(deg)-(Exp(-deg)))/2);
+    }
+
+    public static double Cosh(double deg)
+    {
+        return ((Exp(deg)+Exp(-deg))/2);
+    }
+
+    public static double Tanh(double deg)
+    {
+        return (Sinh(deg)/Cosh(deg));
+    }
+
+    public static double Cosech(double deg)
+    {
+        return (1/(Sinh(deg)));
+    }
+
+    public static double Sech(double deg)
+    {
+        return (1/(Cosh(deg)));
+    }
+
+    public static double Coth(double deg)
+    {
+        return (Cosh(deg)/Sinh(deg));
     }
 
     public static void main(String args[]){
-        System.out.println(Cosec(90));
-        System.out.println(Sec(0));
-        System.out.println(Cot(45));
-        System.out.println(Sqrt(4));
+        System.out.println(Pow(2,-2));
+        System.out.println(Exp(-5));
+        System.out.println(Sinh(1));
+        System.out.println(Cosh(1));
+        System.out.println(Tanh(1));
+        System.out.println(Cosech(1));
+        System.out.println(Sech(1));
+        System.out.println(Coth(1));
     }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
