@@ -1,14 +1,18 @@
+/*
+        * written by Suprith Satish, Vishal V Shetty
+        * data : 18/06/2021
+*/
+
 package Mathamatics.BasicFormulas;
 import java.lang.Math;
 import Mathamatics.Numbers.Double;
-
+import Mathamatics.MathematicalConstants;
+import Mathamatics.Numbers.RealNumbers;
+import utility.MathError;
 
 public class Func {
 
     //BY VISHAL
-    static double PI =  3.14159265358979323846;
-    static double e = 2.7182818284590452353602;
-
     public static double factorial(double num){
         if(num==1 || num==0){
             return 1;
@@ -48,29 +52,30 @@ public class Func {
         return root;
     }
 
-    public static double Sin(double deg) {
+    public static RealNumbers Sin(RealNumbers a) {
+        double num = a.getAsDouble();
 
-        if (deg == Double.Negative_Infinity || !(deg < Double.Positive_Infinity)) {
-            return Double.NaN;
+        if (num == MathematicalConstants.Negative_Infinity || !(num < MathematicalConstants.Positive_Infinity)) {
+            return new Double(MathematicalConstants.NaN);
         }
 
         // If you can't use Math.PI neither,
         // you'll have to create your own PI
-        double a = (deg*PI)/180;
+     //   double num = (deg*MathematicalConstants.PI)/180;
         // Fix the domain for a...
 
         // Sine is a periodic function with period = 2*PI
-        a %= 2 * PI;
+        num %= 2 * MathematicalConstants.PI;
         // Any negative angle can be brought back
         // to it's equivalent positive angle
-        if (a < 0) {
-            a = 2 * PI - a;
+        if (num < 0) {
+            num = 2 * MathematicalConstants.PI - num;
         }
         // Also sine is an odd function...
         // let's take advantage of it.
         int sign = 1;
-        if (a > PI) {
-            a -= PI;
+        if (num > MathematicalConstants.PI) {
+            num -= MathematicalConstants.PI;
             sign = -1;
         }
         // Now a is in range [0, pi].
@@ -82,79 +87,100 @@ public class Func {
         // Note that 171! > Double.MAX_VALUE, so
         // don't set PRECISION to anything greater
         // than 84 unless you are sure your
-        // Factorial.factorial() can handle it
+        // factorial() can handle it
         final int PRECISION = 85;
         double temp = 0;
         for (int i = 0; i <= PRECISION; i++) {
-            temp += Math.pow(-1, i) * (Math.pow(a, 2 * i + 1) / factorial(2 * i + 1));
+            temp += Math.pow(-1, i) * (Math.pow(num, 2 * i + 1) / factorial(2 * i + 1));
         }
 
-        return (sign * temp);
+        return new Double(sign * temp);
 
     }
-    public static double Cos(double deg){
-        double a = 90-deg;
-        return (Sin(a));
+    public static RealNumbers Cos(RealNumbers deg){
+        return Sin(new Double(1.5708-deg.getAsDouble())); //1.5708 is 90 degrees in radians
     }
-    public static double Tan(double deg){
-        return(Sin(deg)/Cos(deg));
+    public static RealNumbers Tan(RealNumbers deg) {
+        Double sinValue = new Double(Sin(deg).getAsDouble());
+        Double cosValue = new Double(Cos(deg).getAsDouble());
+        if(cosValue.getAsDouble()==0)
+            return new Double(MathematicalConstants.Positive_Infinity);
+
+        try {
+            return (RealNumbers) sinValue.div(cosValue);
+        } catch (MathError mathError) {
+            mathError.printStackTrace();
+            return new Double(MathematicalConstants.NaN);
+        }
     }
-    public static double Cosec(double deg){
-        return(1/Sin(deg));
+    public static RealNumbers Cosec(RealNumbers deg){
+        Double sinValue = new Double(Sin(deg).getAsDouble());
+        if (sinValue.getAsDouble() == 0)
+            return new Double(MathematicalConstants.Positive_Infinity);
+
+        return new Double(1/sinValue.getAsDouble());
     }
-    public static double Sec(double deg){
-        return(1/Cos(deg));
+    public static RealNumbers Sec(RealNumbers deg){
+        Double cosValue = new Double(Sin(deg).getAsDouble());
+        if (cosValue.getAsDouble() == 0)
+            return new Double(MathematicalConstants.Positive_Infinity);
+        return new Double(1/cosValue.getAsDouble());
     }
-    public static double Cot(double deg){
-        return(Cos(deg)/Sin(deg));
+    public static RealNumbers Cot(RealNumbers deg){
+        Double sinValue = new Double(Sin(deg).getAsDouble());
+        Double cosValue = new Double(Cos(deg).getAsDouble());
+        if(sinValue.getAsDouble()==0)
+            return new Double(MathematicalConstants.Positive_Infinity);
+
+        try {
+            return (RealNumbers) cosValue.div(sinValue);
+        } catch (MathError mathError) {
+            mathError.printStackTrace();
+            return new Double(MathematicalConstants.NaN);
+        }
+
     }
 
     // BY SUPRITH
 
-    public static double Exp(double num)
+    public static RealNumbers Exp(RealNumbers num)
     {
-        return Pow(e,num);
+        return Pow(MathematicalConstants.e,num);
     }
 
-    public static double Sinh(double deg)
+    public static RealNumbers Sinh(RealNumbers deg)
     {
         return ((Exp(deg)-(Exp(-deg)))/2);
     }
 
-    public static double Cosh(double deg)
+    public static RealNumbers Cosh(RealNumbers deg)
     {
         return ((Exp(deg)+Exp(-deg))/2);
     }
 
-    public static double Tanh(double deg)
+    public static RealNumbers Tanh(RealNumbers deg)
     {
         return (Sinh(deg)/Cosh(deg));
     }
 
-    public static double Cosech(double deg)
+    public static RealNumbers Cosech(RealNumbers deg)
     {
         return (1/(Sinh(deg)));
     }
 
-    public static double Sech(double deg)
+    public static RealNumbers Sech(RealNumbers deg)
     {
         return (1/(Cosh(deg)));
     }
 
-    public static double Coth(double deg)
+    public static RealNumbers Coth(RealNumbers deg)
     {
         return (Cosh(deg)/Sinh(deg));
     }
 
     public static void main(String args[]){
-        System.out.println(Pow(2,-2));
-        System.out.println(Exp(-5));
-        System.out.println(Sinh(1));
-        System.out.println(Cosh(1));
-        System.out.println(Tanh(1));
-        System.out.println(Cosech(1));
-        System.out.println(Sech(1));
-        System.out.println(Coth(1));
+        Double number = new Double(90);
+        System.out.print(Sin(number));
     }
 
 

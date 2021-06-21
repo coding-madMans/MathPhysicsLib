@@ -16,5 +16,10 @@ public class MathematicalConstants {
     public static final double LN_2 = 0.69314718055994530941;
     public static final double LAPLACE_LIMIT = 0.66274341934918158097;
     public static final double GAUSS_CONSTANT = 0.83462684167407318628;
+
+    //Useful things
+    public static final double Negative_Infinity = -1f/0f;
+    public static final double Positive_Infinity = 1f/0f;
+    public static final double NaN = 0f/0f;
 }
 
