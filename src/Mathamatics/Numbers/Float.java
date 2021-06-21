@@ -38,7 +38,7 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
-    protected String repr() {
+    public String repr() {
         return this.num + " ";
     }
 

@@ -37,7 +37,7 @@ public class ComplexNumber extends NumberClass implements NumberSystem{
     }
 
     @Override
-    protected String repr() {
+    public String repr() {
         return this.real + " + i" + this.imaginary + " ";
     }
 

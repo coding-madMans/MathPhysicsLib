@@ -11,4 +11,5 @@ public interface RealNumbers extends NumberSystem{
     double getAsDouble();
     int getAsInt();
     long getAsLong();
+    String repr();
 }

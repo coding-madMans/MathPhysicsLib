@@ -21,7 +21,7 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
         this.num = (int) num;
     }
     @Override
-    protected String repr() {
+    public String repr() {
         return this.num + " ";
     }
 

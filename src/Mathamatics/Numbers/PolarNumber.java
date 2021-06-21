@@ -32,7 +32,7 @@ public class PolarNumber extends NumberClass implements  NumberSystem{
     }
 
     @Override
-    protected String repr() {
+    public String repr() {
         return this.radius + " + r " + this.angle;
     }
 

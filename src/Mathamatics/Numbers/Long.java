@@ -20,7 +20,7 @@ public class Long extends NumberClass implements NumberSystem,RealNumbers {
 
 
     @Override
-    protected String repr() {
+    public String repr() {
         return this.num + " ";
     }
 

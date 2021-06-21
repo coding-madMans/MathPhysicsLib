@@ -6,6 +6,6 @@
 package Mathamatics.Numbers;
 
 public abstract class NumberClass implements NumberSystem {
-    protected abstract String repr();
+    public abstract String repr();
     public abstract String getClassName();
 }

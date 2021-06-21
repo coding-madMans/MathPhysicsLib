@@ -63,7 +63,7 @@ public class Func {
     public static RealNumbers Sin(RealNumbers a) {
         double num = a.getAsDouble();
 
-        if (num == MathematicalConstants.Negative_Infinity || !(num < MathematicalConstants.Positive_Infinity)) {
+        if ((num < MathematicalConstants.Negative_Infinity) || (num > MathematicalConstants.Positive_Infinity)) {
             return new Double(MathematicalConstants.NaN);
         }
 
@@ -92,13 +92,16 @@ public class Func {
         // don't set PRECISION to anything greater
         // than 84 unless you are sure your
         // factorial() can handle it
-        final int PRECISION = 85;
-        double temp = 0;
-        for (int i = 0; i <= PRECISION; i++) {
+        final int PRECISION = 100;
+        double temp = 0, temp2 = temp;
+        int i = 0;
+        while((temp != MathematicalConstants.Negative_Infinity) && (i < PRECISION)){
+            temp2 = temp;
             temp += Math.pow(-1, i) * (Math.pow(num, 2 * i + 1) / factorial(2 * i + 1));
+            i += 1;
         }
 
-        return new Double(sign * temp);
+        return new Double(sign * temp2);
 
     }
     public static RealNumbers Cos(RealNumbers deg){
@@ -217,89 +220,4 @@ public class Func {
             return new Double(MathematicalConstants.NaN);
         }
     }
-
-    public static void main(String args[]){
-        //Double number = new Double(0);
-        System.out.print(Pow(new Double(2.0),new Double (1.0)));
-    }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

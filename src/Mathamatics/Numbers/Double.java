@@ -39,7 +39,7 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
 
 
     @Override
-    protected String repr() {
+    public String repr() {
         return this.num + " ";
     }
 

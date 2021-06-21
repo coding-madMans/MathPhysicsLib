@@ -25,4 +25,5 @@ public interface NumberSystem {
     NumberSystem getUnitValue();
 
     String getClassName();
+    String repr();
 }
