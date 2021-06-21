@@ -1,3 +1,8 @@
+/*
+ * written by Suprith Satish
+ * data : 16/06/2021
+ */
+
 package Mathamatics.Numbers;
 
 import utility.MathError;
