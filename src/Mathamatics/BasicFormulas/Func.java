@@ -33,19 +33,12 @@ public class Func {
         for (int i = 0; i < Abs(power.getAsInt()); i++) {
                 ans = ans * base.getAsDouble();
         }
-        if(power.getAsInt() >= 0)
-        {
-            if(base.getAsDouble() >= 0 || power.getAsInt() % 2 ==0)
-            {
-                return new Double(ans);
-            }
-            return new Double(-ans);
-        }
-        if(base.getAsDouble() >= 0 || power.getAsInt() % 2 == 0)
+
+        if( power.getAsInt() < 0)
         {
             return new Double(1/ans);
         }
-        return new Double(-(1/ans));
+        return new Double(ans);
     }
 
     public static double Sqrt(double number){
@@ -159,12 +152,12 @@ public class Func {
     {
         //Double Value1 = new Double(Exp(deg).getAsDouble());
         //Double Value2 = new Double(Exp(new Double(deg.inv())).getAsDouble());
-        return new Double((Exp(deg).getAsDouble()-(Exp(new Double(deg.getAsDouble()))).getAsDouble())/2);
+        return new Double((Exp(deg).getAsDouble()-(Exp(new Double(-deg.getAsDouble()))).getAsDouble())/2);
     }
 
     public static RealNumbers Cosh(RealNumbers deg)
     {
-        return new Double((Exp(deg).getAsDouble()+(Exp(new Double(deg.getAsDouble()))).getAsDouble())/2);
+        return new Double((Exp(deg).getAsDouble()+(Exp(new Double(-deg.getAsDouble()))).getAsDouble())/2);
     }
 
     public static RealNumbers Tanh(RealNumbers deg)
