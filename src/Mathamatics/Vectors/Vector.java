@@ -2,8 +2,9 @@ package Mathamatics.Vectors;
 
 import Mathamatics.Numbers.Double;
 import Mathamatics.Numbers.NumberClass;
+import utility.MathError;
 
-public class Vector extends Vectors<Double> {
+public class Vector extends Vectors {
 
     public Vector(int length) {
         super(length);
@@ -14,9 +15,12 @@ public class Vector extends Vectors<Double> {
     }
 
     @Override
-    public Vectors<Double> Clone() {
-        return new Vector(this.getLength());
-        // for(int i = ){} complete it Suprith..
+    public Vectors Clone() throws MathError {
+        Vector vector =  new Vector(this.getLength());
+        for(int i = 0; i < this.getLength(); i++){
+            vector.pushDataIndex(i, (NumberClass) this.getDataIndex(i).Clone());
+        }
+        return vector;
     }
 
     @Override

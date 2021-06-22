@@ -8,6 +8,7 @@ package Mathamatics;
 
 import Mathamatics.Numbers.NumberClass;
 import Mathamatics.Numbers.RealNumbers;
+import Mathamatics.Vectors.Vectors;
 import utility.MathError;
 
 import static java.lang.Math.*;
@@ -23,7 +24,7 @@ public class Matrix<T extends NumberClass>{
     public static final int ZERO_VALUE_MATRIX = 32;
     public static final int UNIT_VALUE_MATRIX = 64;
 
-    private NumberClass[][] matrix;
+    private final NumberClass[][] matrix;
 
     public Matrix(int rows, int cols, NumberClass defaultValue){
         this.matrix = new NumberClass[rows][cols];
@@ -172,6 +173,10 @@ public class Matrix<T extends NumberClass>{
         this.matrix[row][col] = (NumberClass) data.Clone();
     }
 
+    public Matrix<T> mul(RealNumbers sFactor) throws MathError {
+        return this.mul(sFactor, false);
+    }
+
     public Matrix<T> mul(RealNumbers sFactor, boolean writeBack) throws MathError {
         int rows = this.getRowCount();
         int cols = this.getColumnCount();
@@ -191,6 +196,53 @@ public class Matrix<T extends NumberClass>{
             }
             return ans;
         }
+    }
+
+    public Vectors mul(Vectors vector) throws MathError {
+        if(vector == null){
+            throw new MathError(MathError.NULL_POINTER_EXCEPTION);
+        }
+        if(this.getColumnCount() != vector.getLength()){
+            throw new MathError(MathError.INCORRECT_ARGUMENT_SIZE);
+        }
+        int row = this.getRowCount();
+        int col = this.getColumnCount();
+        Vectors ansVector = Vectors.zeros(vector.getClassName(), vector.getLength());
+        int ansI = 0;
+        NumberClass temp;
+        for(int r = 0; r < row; r++){
+            temp = ansVector.getDataIndex(ansI);
+            for(int c = 0; c < col; c++){
+                temp.add(this.matrix[r][c].mul(vector.getDataIndex(c)));
+            }
+            ansVector.pushDataIndex(ansI, temp);
+            ansI += 1;
+        }
+        return ansVector;
+    }
+
+    public String repr(){
+        int row = this.getRowCount();
+        int col = this.getColumnCount();
+        StringBuilder info = new StringBuilder("[");
+        for(int r = 0; r < row; r++){
+            if(r != 0){
+                info.append(" ");
+            }
+            info.append("[");
+            for(int c = 0; c < col; c++){
+                info.append(this.matrix[r][c].repr());
+                if((c + 1) != col){
+                    info.append(", ");
+                }
+            }
+            if((r + 1) != row){
+                info.append("]\n");
+            }else{
+                info.append("]]\n");
+            }
+        }
+        return info.toString();
     }
 
 }

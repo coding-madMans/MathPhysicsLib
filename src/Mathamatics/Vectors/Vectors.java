@@ -7,11 +7,10 @@
 package Mathamatics.Vectors;
 
 import Mathamatics.Numbers.*;
-import Mathamatics.Numbers.Float;
 import Mathamatics.Numbers.Double;
 import utility.MathError;
 
-public abstract class Vectors<T extends NumberClass> {
+public abstract class Vectors{
 
     private NumberClass[] data;
 
@@ -30,7 +29,7 @@ public abstract class Vectors<T extends NumberClass> {
         return this.data.length;
     }
 
-    public abstract Vectors<T> Clone();
+    public abstract Vectors Clone() throws MathError;
 
     public abstract String getClassName();
 
@@ -52,11 +51,11 @@ public abstract class Vectors<T extends NumberClass> {
         }
     }
 
-    public Vectors<T> scale(NumberClass sFactor) throws MathError {
+    public Vectors scale(NumberClass sFactor) throws MathError {
         return this.scale(sFactor, false);
     }
 
-    public Vectors<T> scale(NumberClass sFactor, boolean writeBack) throws MathError {
+    public Vectors scale(NumberClass sFactor, boolean writeBack) throws MathError {
         if(sFactor == null){
             throw new MathError(MathError.NULL_POINTER_EXCEPTION);
         }
@@ -69,7 +68,7 @@ public abstract class Vectors<T extends NumberClass> {
             }
             return this;
         }else{
-            Vectors<T> sVector = this.Clone();
+            Vectors sVector = this.Clone();
             for(int i = 0; i < this.data.length; i++){
                 if(this.data[i] == null){
                     throw new MathError(MathError.NULL_POINTER_EXCEPTION);
@@ -80,11 +79,11 @@ public abstract class Vectors<T extends NumberClass> {
         }
     }
 
-    public Vectors<?> crossProduct(Vectors<?> other) throws MathError {
+    public Vectors crossProduct(Vectors other) throws MathError {
         return this.crossProduct(other, false);
     }
 
-    public Vectors<?> crossProduct(Vectors<?> other, boolean writeBack) throws MathError {
+    public Vectors crossProduct(Vectors other, boolean writeBack) throws MathError {
         if(other == null){
             throw new MathError(MathError.NULL_POINTER_EXCEPTION);
         }
@@ -99,7 +98,7 @@ public abstract class Vectors<T extends NumberClass> {
                 otherClass.equals(ComplexNumber.class.getName()) || otherClass.equals(PolarNumber.class.getName()) )){
             throw new MathError(MathError.INCORRECT_ARGUMENTS);
         }
-        Vectors<Double> vector = new Vector(this.data.length);
+        Vectors vector = new Vector(this.data.length);
         vector.data[0] = (NumberClass) this.data[2].mul(other.data[3]).sub(this.data[3].sub(other.data[2]));
         vector.data[1] = (NumberClass) this.data[3].mul(other.data[1]).sub(this.data[1].sub(other.data[3]));
         vector.data[2] = (NumberClass) this.data[1].mul(other.data[2]).sub(this.data[2].sub(other.data[1]));
@@ -111,7 +110,7 @@ public abstract class Vectors<T extends NumberClass> {
         }
     }
 
-    public NumberClass dotProduct(Vectors<?> other) throws MathError {
+    public NumberClass dotProduct(Vectors other) throws MathError {
         if(other == null){
             throw new MathError(MathError.NULL_POINTER_EXCEPTION);
         }
@@ -129,6 +128,60 @@ public abstract class Vectors<T extends NumberClass> {
             value.add(this.data[i].add(other.data[i]), true);
         }
         return value;
+    }
+
+    public String repr(){
+        StringBuilder info = new StringBuilder("[");
+        for(int i = 0; i < this.data.length; i++){
+            if (i != 0){
+                info.append(", ");
+            }
+            info.append(this.data[i].repr());
+        }
+        info.append("]");
+        return info.toString();
+    }
+
+    public static Vectors zeros(String className, int size){
+        Vectors vector;
+        if(className.equals(Double.class.getName())){
+            vector = new Vector(size);
+            for(int i = 0; i < size; i++){
+                vector.data[i] = new Double();
+            }
+        }else if(className.equals(ComplexNumber.class.getName())){
+            vector = new ComplexVector(size);
+            for(int i = 0; i < size; i++){
+                vector.data[i] = new ComplexNumber();
+            }
+        }else{
+            vector = new PolarVector(size);
+            for(int i = 0; i < size; i++){
+                vector.data[i] = new PolarNumber();
+            }
+        }
+        return vector;
+    }
+
+    public static Vectors ones(String className, int size){
+        Vectors vector;
+        if(className.equals(Double.class.getName())){
+            vector = new Vector(size);
+            for(int i = 0; i < size; i++){
+                vector.data[i] = new Double(1);
+            }
+        }else if(className.equals(ComplexNumber.class.getName())){
+            vector = new ComplexVector(size);
+            for(int i = 0; i < size; i++){
+                vector.data[i] = new ComplexNumber(1, 1);
+            }
+        }else{
+            vector = new PolarVector(size);
+            for(int i = 0; i < size; i++){
+                vector.data[i] = new PolarNumber(1, 1);
+            }
+        }
+        return vector;
     }
 
 }
