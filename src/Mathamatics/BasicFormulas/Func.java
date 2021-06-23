@@ -3,12 +3,14 @@
         * data : 18/06/2021
 */
 
+
 package Mathamatics.BasicFormulas;
 import Mathamatics.Numbers.Double;
 import java.math.*;
 import Mathamatics.MathematicalConstants;
 import Mathamatics.Numbers.RealNumbers;
 import utility.MathError;
+import Mathamatics.Numbers.Integer;
 
 public class Func {
 
@@ -212,5 +214,35 @@ public class Func {
             mathError.printStackTrace();
             return new Double(MathematicalConstants.NaN);
         }
+    }
+
+    public static RealNumbers Min(RealNumbers arr[],Integer n)
+    {
+
+        Integer min = new Integer(arr[0].getAsInt());
+
+        for(int i=1;i< n.getAsInt();i++)
+        {
+            if(arr[i].getAsInt() < min.getAsInt() )
+            {
+                arr[i] = min;
+            }
+        }
+        return min;
+    }
+
+    public static RealNumbers Max(RealNumbers arr[],Integer n)
+    {
+
+        Integer max = new Integer(arr[0].getAsInt());
+
+        for(int i=1;i< n.getAsInt();i++)
+        {
+            if(arr[i].getAsInt() > max.getAsInt() )
+            {
+                arr[i] = max;
+            }
+        }
+        return max;
     }
 }
