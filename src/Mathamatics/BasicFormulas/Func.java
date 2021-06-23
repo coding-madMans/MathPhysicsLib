@@ -3,12 +3,14 @@
         * data : 18/06/2021
 */
 
+
 package Mathamatics.BasicFormulas;
 import Mathamatics.Numbers.Double;
 import java.math.*;
 import Mathamatics.MathematicalConstants;
 import Mathamatics.Numbers.RealNumbers;
 import utility.MathError;
+import Mathamatics.Numbers.Integer;
 
 public class Func {
 
@@ -213,4 +215,102 @@ public class Func {
             return new Double(MathematicalConstants.NaN);
         }
     }
+
+    public static RealNumbers Min(RealNumbers arr[],Integer n)
+    {
+
+        Integer min = new Integer(arr[0].getAsInt());
+
+        for(int i=1;i< n.getAsInt();i++)
+        {
+            if(arr[i].getAsInt() < min.getAsInt() )
+            {
+                arr[i] = min;
+            }
+        }
+        return min;
+    }
+
+    public static RealNumbers Max(RealNumbers arr[],Integer n)
+    {
+
+        Integer max = new Integer(arr[0].getAsInt());
+
+        for(int i=1;i< n.getAsInt();i++)
+        {
+            if(arr[i].getAsInt() > max.getAsInt() )
+            {
+                arr[i] = max;
+            }
+        }
+        return max;
+    }
+
+    //MERGE SORT BEGINS
+    public static void merge(RealNumbers arr[], int l, int m, int r) {
+        // Find sizes of two sub-arrays to be merged
+        int n1 = m - l + 1;
+        int n2 = r - m;
+
+        /* Create temp arrays */
+        RealNumbers L[] = new RealNumbers[n1];
+        RealNumbers R[] = new RealNumbers[n2];
+
+        /Copy data to temp arrays/
+        for (int i = 0; i < n1; ++i)
+            L[i] = arr[l + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = arr[m + 1 + j];
+
+        /* Merge the temp arrays */
+
+        // Initial indexes of first and second subarrays
+        int i = 0, j = 0;
+
+        // Initial index of merged subarry array
+        int k = l;
+        while (i < n1 && j < n2) {
+            if (L[i].getAsDouble() <= R[j].getAsDouble()) {
+                arr[k] = L[i];
+                i++;
+            } else {
+                arr[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        /* Copy remaining elements of L[] if any */
+        while (i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+
+        /* Copy remaining elements of R[] if any */
+        while (j < n2) {
+            arr[k] = R[j];
+            j++;
+            k++;
+        }
+    }
+
+    // Main function that sorts arr[l..r] using
+    // merge()
+    public static RealNumbers[] Sort(RealNumbers[] arr, int l, int r) {
+        if (l < r) {
+            // Find the middle point
+            int m = l + (r - l) / 2;
+
+            // Sort first and second halves
+            Sort(arr, l, m);
+            Sort(arr, m + 1, r);
+
+            // Merge the sorted halves
+            merge(arr, l, m, r);
+        }
+        return arr;
+
+    }
+    //MERGE SORT END
 }
