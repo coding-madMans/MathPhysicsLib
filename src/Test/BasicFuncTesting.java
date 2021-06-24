@@ -2,6 +2,10 @@ package Test;
 
 import Mathamatics.MathematicalConstants;
 import Mathamatics.Numbers.Double;
+import Mathamatics.Numbers.Integer;
+
+import java.util.Arrays;
+
 import static Mathamatics.BasicFormulas.Func.*;
 
 public class BasicFuncTesting {
@@ -16,5 +20,13 @@ public class BasicFuncTesting {
         System.out.println(Cosh(new Double(10)).repr());
         System.out.println(Tanh(new Double(10)).repr());
        //System.out.println(Cot(new Double(0.7853982)).repr());
+        System.out.println(factorial(new Integer(5)).repr());
+        System.out.println(Cbrt(new Double(27)).repr());
+        System.out.println(Sqrt(new Double(16)).repr());
+        Integer[] array = new Integer[4];
+        array = new Integer[]{new Integer(19), new Integer(2), new Integer(31), new Integer(4)};
+        System.out.println(Arrays.toString(Sort(array, 0, 3)));
+        System.out.println(Min(array,new Integer(4)).repr());
+
     }
 }

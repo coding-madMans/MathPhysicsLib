@@ -16,10 +16,10 @@ public class Func {
 
     //BY VISHAL
     public static Integer factorial(Integer num){
-        if(num==1 || num==0){
-            return 1;
+        if(num.getAsInt()==1 || num.getAsInt()==0){
+            return new Integer(1);
         }
-        return (num*factorial(num-1));
+        return new Integer(num.getAsInt()*(factorial(new Integer(num.getAsInt()-1)).getAsInt()));
     }
 
     public static double Abs(double num)
@@ -43,16 +43,25 @@ public class Func {
         return new Double(ans);
     }
 
-    public static double Sqrt(double number){
+    public static RealNumbers Sqrt(RealNumbers number){
         double root = 1;
         int i = 0;
         while (true)
         {
             i = i + 1;
-            root = (number / root + root) / 2;
-            if (i == number + 1) { break; }
+            root = (number.getAsDouble() / root + root) / 2;
+            if (i == number.getAsDouble() + 1) { break; }
         }
-        return root;
+        return new Double(root);
+    }
+    public static RealNumbers Cbrt(RealNumbers num){
+        double i, precision = 0.000001;
+
+        for(i = 1; (i*i*i) <= num.getAsInt(); ++i);         //Integer part
+
+        for(--i; (i*i*i) < num.getAsInt(); i += precision);  //Fractional part
+
+        return new Integer(i);
     }
 
     public static RealNumbers Sin(RealNumbers a) {
@@ -89,11 +98,11 @@ public class Func {
         // factorial() can handle it
         final int PRECISION = 100;
         double temp = 0, temp2 = temp;
-        int i = 0;
-        while((temp != MathematicalConstants.Negative_Infinity) && (i < PRECISION)){
+        Integer i = new Integer(0);
+        while((temp != MathematicalConstants.Negative_Infinity) && (i.getAsInt() < PRECISION)){
             temp2 = temp;
-            temp += Math.pow(-1, i) * (Math.pow(num, 2 * i + 1) / factorial(2 * i + 1));
-            i += 1;
+            temp += (Pow(new Integer(-1), i)).getAsDouble() * (Pow(new Double(num), new Integer(2 * i.getAsInt() + 1))).getAsDouble()/(factorial(new Integer(2 * i.getAsInt() + 1))).getAsDouble();
+            i = new Integer(i.getAsInt()+ 1);
         }
 
         return new Double(sign * temp2);
@@ -219,13 +228,13 @@ public class Func {
     public static RealNumbers Min(RealNumbers arr[],Integer n)
     {
 
-        Integer min = new Integer(arr[0].getAsInt());
+        RealNumbers min = new Integer(arr[0].getAsInt());
 
         for(int i=1;i< n.getAsInt();i++)
         {
             if(arr[i].getAsInt() < min.getAsInt() )
             {
-                arr[i] = min;
+                min = arr[i];
             }
         }
         return min;
@@ -234,13 +243,13 @@ public class Func {
     public static RealNumbers Max(RealNumbers arr[],Integer n)
     {
 
-        Integer max = new Integer(arr[0].getAsInt());
+        RealNumbers max = new Integer(arr[0].getAsInt());
 
         for(int i=1;i< n.getAsInt();i++)
         {
             if(arr[i].getAsInt() > max.getAsInt() )
             {
-                arr[i] = max;
+                max = arr[i];
             }
         }
         return max;
@@ -256,7 +265,7 @@ public class Func {
         RealNumbers L[] = new RealNumbers[n1];
         RealNumbers R[] = new RealNumbers[n2];
 
-        /Copy data to temp arrays/
+
         for (int i = 0; i < n1; ++i)
             L[i] = arr[l + i];
         for (int j = 0; j < n2; ++j)
@@ -309,7 +318,11 @@ public class Func {
             // Merge the sorted halves
             merge(arr, l, m, r);
         }
-        return arr;
+
+
+
+
+     return arr;
 
     }
     //MERGE SORT END
