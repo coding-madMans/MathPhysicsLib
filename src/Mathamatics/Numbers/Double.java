@@ -36,8 +36,6 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
         this.num = (double)num;
     }
 
-
-
     @Override
     public String repr() {
         return this.num + " ";
@@ -106,7 +104,6 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
         return new Double(this.num * temp.getAsDouble());
     }
 
-
     @Override
     public NumberSystem div(NumberSystem other) throws MathError {
         return this.div(other, false);
@@ -166,7 +163,6 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
     public String getClassName() {
         return Double.class.getName();
     }
-
 
     @Override
     public float getAsFloat() {

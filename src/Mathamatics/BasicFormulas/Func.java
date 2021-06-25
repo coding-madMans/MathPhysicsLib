@@ -5,6 +5,7 @@
 
 
 package Mathamatics.BasicFormulas;
+import Mathamatics.NumberArray;
 import Mathamatics.Numbers.Double;
 import java.math.*;
 import Mathamatics.MathematicalConstants;
@@ -256,20 +257,20 @@ public class Func {
     }
 
     //MERGE SORT BEGINS
-    public static void merge(RealNumbers arr[], int l, int m, int r) {
+    public static void merge(NumberArray<?> arr, int l, int m, int r) throws MathError {
         // Find sizes of two sub-arrays to be merged
         int n1 = m - l + 1;
         int n2 = r - m;
 
         /* Create temp arrays */
-        RealNumbers L[] = new RealNumbers[n1];
-        RealNumbers R[] = new RealNumbers[n2];
+        NumberArray<?> L = new NumberArray<>(n1);
+        NumberArray<?> R = new NumberArray<>(n2);
 
 
         for (int i = 0; i < n1; ++i)
-            L[i] = arr[l + i];
+            L.push(i, arr.get(l + i));
         for (int j = 0; j < n2; ++j)
-            R[j] = arr[m + 1 + j];
+            R.push(j, arr.get(m + 1 + j));
 
         /* Merge the temp arrays */
 
@@ -279,11 +280,11 @@ public class Func {
         // Initial index of merged subarry array
         int k = l;
         while (i < n1 && j < n2) {
-            if (L[i].getAsDouble() <= R[j].getAsDouble()) {
-                arr[k] = L[i];
+            if (L.get(i).getAsDouble() <= R.get(j).getAsDouble()) {
+                arr.push(k, L.get(i));
                 i++;
             } else {
-                arr[k] = R[j];
+                arr.push(k, R.get(j));
                 j++;
             }
             k++;
@@ -291,14 +292,14 @@ public class Func {
 
         /* Copy remaining elements of L[] if any */
         while (i < n1) {
-            arr[k] = L[i];
+            arr.push(k, L.get(i));
             i++;
             k++;
         }
 
         /* Copy remaining elements of R[] if any */
         while (j < n2) {
-            arr[k] = R[j];
+            arr.push(k, R.get(j));
             j++;
             k++;
         }
@@ -306,7 +307,7 @@ public class Func {
 
     // Main function that sorts arr[l..r] using
     // merge()
-    public static RealNumbers[] Sort(RealNumbers[] arr, int l, int r) {
+    public static NumberArray<?> Sort(NumberArray<?> arr, int l, int r) throws MathError {
         if (l < r) {
             // Find the middle point
             int m = l + (r - l) / 2;
@@ -318,12 +319,30 @@ public class Func {
             // Merge the sorted halves
             merge(arr, l, m, r);
         }
-
-
-
-
      return arr;
-
     }
     //MERGE SORT END
+
+    // by vasu
+    public static Double fib(Double number){
+        if(number == null){
+            return null;
+        }
+        return fastFib(number, new Double(0), new Double(1));
+    }
+
+    private static Double fastFib(Double number, Double a, Double b){
+        if(number.getAsDouble() == 0.0){
+            return a;
+        }
+        if(number.getAsDouble() == 1.0){
+            return b;
+        }
+        try {
+            return fastFib((Double) number.sub(new Integer(1)), b, (Double) a.add(b));
+        } catch (MathError mathError) {
+            mathError.printStackTrace();
+            return null;
+        }
+    }
 }
