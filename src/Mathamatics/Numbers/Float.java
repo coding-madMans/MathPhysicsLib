@@ -43,6 +43,270 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
+    public RealNumbers add(int value) {
+        return new Double(this.num + value);
+    }
+
+    @Override
+    public RealNumbers add(int value, boolean writeBack) {
+        if(writeBack){
+            this.num += value;
+            return this;
+        }else{
+            return new Double(this.num + value);
+        }
+    }
+
+    @Override
+    public RealNumbers sub(int value) {
+        return new Double(this.num - value);
+    }
+
+    @Override
+    public RealNumbers sub(int value, boolean writeBack) {
+        if(writeBack){
+            this.num -= value;
+            return this;
+        }else{
+            return new Double(this.num - value);
+        }
+    }
+
+    @Override
+    public RealNumbers mul(int value) {
+        return new Double(this.num * value);
+    }
+
+    @Override
+    public RealNumbers mul(int value, boolean writeBack) {
+        if(writeBack){
+            this.num *= value;
+            return this;
+        }else{
+            return new Double(this.num * value);
+        }
+    }
+
+    @Override
+    public RealNumbers div(int value) throws MathError {
+        if(value == 0){
+            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
+        }
+        return new Double(this.num / value);
+    }
+
+    @Override
+    public RealNumbers div(int value, boolean writeBack) throws MathError {
+        if(value == 0){
+            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
+        }
+        if(writeBack){
+            this.num /= value;
+            return this;
+        }else{
+            return new Double(this.num / value);
+        }
+    }
+
+    @Override
+    public RealNumbers add(float value) {
+        return new Double(this.num + value);
+    }
+
+    @Override
+    public RealNumbers add(float value, boolean writeBack) {
+        if(writeBack){
+            this.num += value;
+            return this;
+        }else{
+            return new Double(this.num + value);
+        }
+    }
+
+    @Override
+    public RealNumbers sub(float value) {
+        return new Double(this.num - value);
+    }
+
+    @Override
+    public RealNumbers sub(float value, boolean writeBack) {
+        if(writeBack){
+            this.num -= value;
+            return this;
+        }else{
+            return new Double(this.num - value);
+        }
+    }
+
+    @Override
+    public RealNumbers mul(float value) {
+        return new Double(this.num * value);
+    }
+
+    @Override
+    public RealNumbers mul(float value, boolean writeBack) {
+        if(writeBack){
+            this.num *= value;
+            return this;
+        }else{
+            return new Double(this.num * value);
+        }
+    }
+
+    @Override
+    public RealNumbers div(float value) throws MathError {
+        if(value == 0){
+            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
+        }
+        return new Double(this.num / value);
+    }
+
+    @Override
+    public RealNumbers div(float value, boolean writeBack) throws MathError {
+        if(value == 0){
+            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
+        }
+        if(writeBack){
+            this.num /= value;
+            return this;
+        }else{
+            return new Double(this.num / value);
+        }
+    }
+
+    @Override
+    public RealNumbers add(double value) {
+        return new Double(this.num + value);
+    }
+
+    @Override
+    public RealNumbers add(double value, boolean writeBack) {
+        if(writeBack){
+            this.num += value;
+            return this;
+        }else{
+            return new Double(this.num + value);
+        }
+    }
+
+    @Override
+    public RealNumbers sub(double value) {
+        return new Double(this.num - value);
+    }
+
+    @Override
+    public RealNumbers sub(double value, boolean writeBack) {
+        if(writeBack){
+            this.num -= value;
+            return this;
+        }else{
+            return new Double(this.num - value);
+        }
+    }
+
+    @Override
+    public RealNumbers mul(double value) {
+        return new Double(this.num * value);
+    }
+
+    @Override
+    public RealNumbers mul(double value, boolean writeBack) {
+        if(writeBack){
+            this.num *= value;
+            return this;
+        }else{
+            return new Double(this.num * value);
+        }
+    }
+
+    @Override
+    public RealNumbers div(double value) throws MathError {
+        if(value == 0){
+            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
+        }
+        return new Double(this.num / value);
+    }
+
+    @Override
+    public RealNumbers div(double value, boolean writeBack) throws MathError {
+        if(value == 0){
+            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
+        }
+        if(writeBack){
+            this.num /= value;
+            return this;
+        }else{
+            return new Double(this.num / value);
+        }
+    }
+
+    @Override
+    public RealNumbers add(long value) {
+        return new Double(this.num + value);
+    }
+
+    @Override
+    public RealNumbers add(long value, boolean writeBack) {
+        if(writeBack){
+            this.num += value;
+            return this;
+        }else{
+            return new Double(this.num + value);
+        }
+    }
+
+    @Override
+    public RealNumbers sub(long value) {
+        return new Double(this.num - value);
+    }
+
+    @Override
+    public RealNumbers sub(long value, boolean writeBack) {
+        if(writeBack){
+            this.num -= value;
+            return this;
+        }else{
+            return new Double(this.num - value);
+        }
+    }
+
+    @Override
+    public RealNumbers mul(long value) {
+        return new Double(this.num * value);
+    }
+
+    @Override
+    public RealNumbers mul(long value, boolean writeBack) {
+        if(writeBack){
+            this.num *= value;
+            return this;
+        }else{
+            return new Double(this.num * value);
+        }
+    }
+
+    @Override
+    public RealNumbers div(long value) throws MathError {
+        if(value == 0){
+            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
+        }
+        return new Double(this.num / value);
+    }
+
+    @Override
+    public RealNumbers div(long value, boolean writeBack) throws MathError {
+        if(value == 0){
+            throw new MathError(MathError.DIVISION_BY_ZERO_ERROR);
+        }
+        if(writeBack){
+            this.num /= value;
+            return this;
+        }else{
+            return new Double(this.num / value);
+        }
+    }
+    
+    @Override
     public NumberSystem add(NumberSystem other) throws MathError {
         return this.add(other, false);
     }
