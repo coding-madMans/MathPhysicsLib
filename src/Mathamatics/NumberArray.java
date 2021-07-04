@@ -59,4 +59,10 @@ public class NumberArray<T extends RealNumbers> {
         return info.append("]").toString();
     }
 
+    public void sort(){}
+
+    public int search(T ele){
+        return 0;
+    }
+
 }

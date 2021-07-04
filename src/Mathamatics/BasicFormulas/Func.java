@@ -7,7 +7,6 @@
 package Mathamatics.BasicFormulas;
 import Mathamatics.NumberArray;
 import Mathamatics.Numbers.Double;
-import java.math.*;
 import Mathamatics.MathematicalConstants;
 import Mathamatics.Numbers.RealNumbers;
 import utility.MathError;
@@ -324,22 +323,30 @@ public class Func {
     //MERGE SORT END
 
     // by vasu
-    public static Double fib(Double number){
+    /**
+     * fib this is helper function,
+     * which calls the fastFib function, with initial conditions..
+     * fastFib is a tail recursive function, which has linear time complexity
+     *
+     * @param number takes in a {@link RealNumbers}, of which u want to find fib
+     * @return returns a {@link RealNumbers}
+     */
+    public static RealNumbers fib(RealNumbers number){
         if(number == null){
-            return null;
+            return new Double(MathematicalConstants.NaN);
         }
         return fastFib(number, new Double(0), new Double(1));
     }
 
-    private static Double fastFib(Double number, Double a, Double b){
+    private static Double fastFib(RealNumbers number, RealNumbers a, RealNumbers b){
         if(number.getAsDouble() == 0.0){
-            return a;
+            return (Double) a;
         }
         if(number.getAsDouble() == 1.0){
-            return b;
+            return (Double) b;
         }
         try {
-            return fastFib((Double) number.sub(new Integer(1)), b, (Double) a.add(b));
+            return fastFib(number.sub(1), b, (RealNumbers) a.add(b));
         } catch (MathError mathError) {
             mathError.printStackTrace();
             return null;

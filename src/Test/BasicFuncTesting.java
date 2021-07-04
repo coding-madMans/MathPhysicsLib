@@ -4,6 +4,7 @@ import Mathamatics.MathematicalConstants;
 import Mathamatics.NumberArray;
 import Mathamatics.Numbers.Double;
 import Mathamatics.Numbers.Integer;
+import Mathamatics.Numbers.RealNumbers;
 import utility.MathError;
 
 import java.util.Arrays;
@@ -30,5 +31,6 @@ public class BasicFuncTesting {
         }
         System.out.println(array.repr());
         System.out.println(Sort(array, 0, 3).repr());
+        RealNumbers data = fib(new Integer(2));
     }
 }
