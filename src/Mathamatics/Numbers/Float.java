@@ -109,6 +109,11 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
+    public boolean eql(int value) {
+        return this.num == value;
+    }
+
+    @Override
     public RealNumbers add(float value) {
         return new Double(this.num + value);
     }
@@ -172,6 +177,11 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
         }else{
             return new Double(this.num / value);
         }
+    }
+
+    @Override
+    public boolean eql(float value) {
+        return this.num == value;
     }
 
     @Override
@@ -241,6 +251,11 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
+    public boolean eql(double value) {
+        return this.num == value;
+    }
+
+    @Override
     public RealNumbers add(long value) {
         return new Double(this.num + value);
     }
@@ -305,7 +320,12 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
             return new Double(this.num / value);
         }
     }
-    
+
+    @Override
+    public boolean eql(long value) {
+        return this.num == value;
+    }
+
     @Override
     public NumberSystem add(NumberSystem other) throws MathError {
         return this.add(other, false);
@@ -393,6 +413,24 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
         }else{
             return new Float(this.num / temp.getAsFloat());
         }
+    }
+
+    @Override
+    public boolean eql(NumberSystem other) {
+        Float temp = (Float) other;
+        return this.num == temp.num;
+    }
+
+    @Override
+    public boolean grater(NumberSystem other) {
+        Float temp = (Float) other;
+        return this.num > temp.num;
+    }
+
+    @Override
+    public boolean less(NumberSystem other) {
+        Float temp = (Float) other;
+        return this.num < temp.num;
     }
 
     @Override

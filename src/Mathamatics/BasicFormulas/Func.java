@@ -352,4 +352,36 @@ public class Func {
             return null;
         }
     }
+
+    public static RealNumbers NcR(RealNumbers N, RealNumbers R){
+        if((N == null) || (R == null)){
+            return new Double(MathematicalConstants.NaN);
+        }
+        if(N.getAsInt() < R.getAsInt()){
+            return new Double(MathematicalConstants.NaN);
+        }
+        try {
+            Integer n = (Integer) N, r = (Integer) R, nr = (Integer) N.sub(r);
+            return (RealNumbers) factorial(n).div(factorial(r).mul(factorial(nr)));
+        } catch (MathError mathError) {
+            mathError.printStackTrace();
+            return new Double(MathematicalConstants.NaN);
+        }
+    }
+
+    public static RealNumbers NpR(RealNumbers N, RealNumbers R){
+        if((N == null) || (R == null)){
+            return new Double(MathematicalConstants.NaN);
+        }
+        if(N.getAsInt() < R.getAsInt()){
+            return new Double(MathematicalConstants.NaN);
+        }
+        try {
+            Integer n = (Integer) N, r = (Integer) R;
+            return (RealNumbers) factorial(n).div(factorial(r));
+        } catch (MathError mathError) {
+            mathError.printStackTrace();
+            return new Double(MathematicalConstants.NaN);
+        }
+    }
 }

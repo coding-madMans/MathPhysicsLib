@@ -16,6 +16,9 @@ public interface NumberSystem {
     NumberSystem mul(NumberSystem other, boolean writeBack) throws MathError;
     NumberSystem div(NumberSystem other) throws MathError;
     NumberSystem div(NumberSystem other, boolean writeBack) throws MathError;
+    boolean eql(NumberSystem other);
+    boolean grater(NumberSystem other);
+    boolean less(NumberSystem other);
 
     NumberSystem inv();
     NumberSystem inv(boolean writeBack);

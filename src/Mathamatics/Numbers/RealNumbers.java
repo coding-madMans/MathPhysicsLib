@@ -23,6 +23,7 @@ public interface RealNumbers extends NumberSystem{
     RealNumbers mul(int value, boolean writeBack);
     RealNumbers div(int value) throws MathError;
     RealNumbers div(int value, boolean writeBack) throws MathError;
+    boolean eql(int value);
 
     RealNumbers add(float value);
     RealNumbers add(float value, boolean writeBack);
@@ -32,6 +33,7 @@ public interface RealNumbers extends NumberSystem{
     RealNumbers mul(float value, boolean writeBack);
     RealNumbers div(float value) throws MathError;
     RealNumbers div(float value, boolean writeBack) throws MathError;
+    boolean eql(float value);
 
     RealNumbers add(double value);
     RealNumbers add(double value, boolean writeBack);
@@ -41,6 +43,7 @@ public interface RealNumbers extends NumberSystem{
     RealNumbers mul(double value, boolean writeBack);
     RealNumbers div(double value) throws MathError;
     RealNumbers div(double value, boolean writeBack) throws MathError;
+    boolean eql(double value);
 
     RealNumbers add(long value);
     RealNumbers add(long value, boolean writeBack);
@@ -50,4 +53,5 @@ public interface RealNumbers extends NumberSystem{
     RealNumbers mul(long value, boolean writeBack);
     RealNumbers div(long value) throws MathError;
     RealNumbers div(long value, boolean writeBack) throws MathError;
+    boolean eql(long value);
 }

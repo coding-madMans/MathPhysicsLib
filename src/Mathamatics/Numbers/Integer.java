@@ -92,6 +92,11 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
     }
 
     @Override
+    public boolean eql(int value) {
+        return this.num == value;
+    }
+
+    @Override
     public RealNumbers add(float value) {
         return new Double(this.num + value);
     }
@@ -155,6 +160,11 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
         }else{
             return new Double(this.num / value);
         }
+    }
+
+    @Override
+    public boolean eql(float value) {
+        return this.num == value;
     }
 
     @Override
@@ -224,6 +234,11 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
     }
 
     @Override
+    public boolean eql(double value) {
+        return this.num == value;
+    }
+
+    @Override
     public RealNumbers add(long value) {
         return new Double(this.num + value);
     }
@@ -287,6 +302,11 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
         }else{
             return new Double(this.num / value);
         }
+    }
+
+    @Override
+    public boolean eql(long value) {
+        return this.num == value;
     }
 
     @Override
@@ -376,6 +396,24 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
         }else{
             return new Integer(this.num / temp.getAsInt());
         }
+    }
+
+    @Override
+    public boolean eql(NumberSystem other) {
+        Integer temp = (Integer) other;
+        return this.num == temp.num;
+    }
+
+    @Override
+    public boolean grater(NumberSystem other) {
+        Integer temp = (Integer) other;
+        return this.num > temp.num;
+    }
+
+    @Override
+    public boolean less(NumberSystem other) {
+        Integer temp = (Integer) other;
+        return this.num < temp.num;
     }
 
     @Override

@@ -7,7 +7,7 @@ import utility.MathError;
 
 public class NumberArray<T extends RealNumbers> {
 
-    private final NumberClass[] array;
+    private NumberClass[] array;
 
     public NumberArray(int size){
         this.array = new NumberClass[size];
@@ -59,10 +59,73 @@ public class NumberArray<T extends RealNumbers> {
         return info.append("]").toString();
     }
 
+    // Vishal sorting algo here vvv
     public void sort(){}
 
+    public NumberArray<T> split(int s, int e){
+        return this.split(s, e, false);
+    }
+
+    public NumberArray<T> split(int s, int e, boolean writeBack){
+        if((s < 0) || (e > this.array.length) || (s < e)){
+            return null;
+        }
+        NumberArray<T> arr = new NumberArray<>(s - e);
+        for(int i = 0; i < arr.getLength(); i++){
+            arr.array[i] = (NumberClass) this.array[s + i].Clone();
+        }
+        if(writeBack){
+            this.array = arr.array;
+            return this;
+        }
+        return arr;
+    }
+
+    public NumberArray<T> merge(NumberArray<T> arr){
+        return this.merge(arr, false);
+    }
+
+    public NumberArray<T> merge(NumberArray<T> arr, boolean writeBack){
+        NumberArray<T> tArr = new NumberArray<>(this.getLength() + arr.getLength());
+        int i = 0, t = 0;
+        for(;i < this.getLength(); i++){
+            tArr.array[i] = (NumberClass) this.array[i].Clone();
+        }
+        for(i = 0; i < arr.getLength(); i++, t++){
+            tArr.array[i + t] = (NumberClass) arr.array[i].Clone();
+        }
+        if(writeBack){
+            this.array = tArr.array;
+            return this;
+        }
+        return tArr;
+    }
+
     public int search(T ele){
-        return 0;
+        for(int i = 0; i < this.getLength(); i++){
+            if(this.array[i].eql(ele)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int search(T ele, boolean sorted){
+        if(sorted){
+            int s = 0, e = this.getLength(), m = ((s + e) / 2);
+            while(e > s){
+                if(this.array[m].eql(ele)){
+                    return m;
+                }
+                if(this.array[m].grater(ele)){
+                    s = m + 1;
+                }else{
+                    e = m - 1;
+                }
+            }
+            return -1;
+        }
+        return this.search(ele);
     }
 
 }

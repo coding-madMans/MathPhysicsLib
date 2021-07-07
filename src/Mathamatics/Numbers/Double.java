@@ -108,6 +108,11 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
+    public boolean eql(int value) {
+        return this.num == value;
+    }
+
+    @Override
     public RealNumbers add(float value) {
         return new Double(this.num + value);
     }
@@ -171,6 +176,11 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
         }else{
             return new Double(this.num / value);
         }
+    }
+
+    @Override
+    public boolean eql(float value) {
+        return this.num == value;
     }
 
     @Override
@@ -240,6 +250,11 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
+    public boolean eql(double value) {
+        return this.num == value;
+    }
+
+    @Override
     public RealNumbers add(long value) {
         return new Double(this.num + value);
     }
@@ -303,6 +318,11 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
         }else{
             return new Double(this.num / value);
         }
+    }
+
+    @Override
+    public boolean eql(long value) {
+        return this.num == value;
     }
 
     @Override
@@ -391,6 +411,24 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
         }else{
             return new Double(this.num / temp.getAsDouble());
         }
+    }
+
+    @Override
+    public boolean eql(NumberSystem other) {
+        Double temp = (Double) other;
+        return this.num == temp.num;
+    }
+
+    @Override
+    public boolean grater(NumberSystem other) {
+        Double temp = (Double) other;
+        return this.num > temp.num;
+    }
+
+    @Override
+    public boolean less(NumberSystem other) {
+        Double temp = (Double) other;
+        return this.num < temp.num;
     }
 
     @Override
