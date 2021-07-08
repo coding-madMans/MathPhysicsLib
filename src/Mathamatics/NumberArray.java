@@ -128,4 +128,26 @@ public class NumberArray<T extends RealNumbers> {
         return this.search(ele);
     }
 
+    public interface ForEach{
+        void run(RealNumbers ele);
+    }
+
+    public void forEach(ForEach func){
+        for(NumberClass ele : this.array){
+            func.run((RealNumbers) ele);
+        }
+    }
+
+    public interface Map{
+        boolean run(RealNumbers self, RealNumbers mapVar);
+    }
+
+    public boolean[] map(Map mapFunc, RealNumbers mapVar){
+        boolean[] map = new boolean[this.getLength()];
+        for(int i = 0; i < this.getLength(); i++){
+            map[i] = mapFunc.run((RealNumbers) this.array[i], mapVar);
+        }
+        return map;
+    }
+
 }

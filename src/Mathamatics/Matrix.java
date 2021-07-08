@@ -183,7 +183,7 @@ public class Matrix<T extends NumberClass>{
         if(writeBack){
             for(int r = 0; r < rows; r++){
                 for(int c = 0; c < cols; c++){
-                    this.matrix[r][c].mul(sFactor);
+                    this.matrix[r][c].mul(sFactor, true);
                 }
             }
             return this;
@@ -243,6 +243,33 @@ public class Matrix<T extends NumberClass>{
             }
         }
         return info.toString();
+    }
+
+    public interface ForEach{
+        void run(NumberClass ele);
+    }
+
+    public Matrix<T> forEach(ForEach func){
+        for(NumberClass[] arr : this.matrix){
+            for(NumberClass ele : arr){
+                func.run(ele);
+            }
+        }
+        return this;
+    }
+
+    public interface Map{
+        boolean run(NumberClass self, NumberClass mapVar);
+    }
+
+    public boolean[][] map(Map mapFunc, NumberClass mapVar){
+        boolean[][] map = new boolean[this.getRowCount()][this.getColumnCount()];
+        for(int r = 0; r < this.getRowCount(); r++){
+            for(int c = 0; c < this.getColumnCount(); c++){
+                map[r][c] = mapFunc.run(this.matrix[r][c], mapVar);
+            }
+        }
+        return map;
     }
 
 }
