@@ -5,6 +5,9 @@ import Mathamatics.Numbers.NumberClass;
 import Mathamatics.Numbers.RealNumbers;
 import utility.MathError;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NumberArray<T extends RealNumbers> {
 
     private NumberClass[] array;
@@ -24,6 +27,13 @@ public class NumberArray<T extends RealNumbers> {
         for(int i = 0; i < this.array.length; i++){
             this.array[i] = (NumberClass) num.getUnitValue().mul(new Integer(i), true);
         }
+    }
+
+    public NumberArray(NumberClass[] arr) throws MathError {
+        if(arr == null){
+            throw new MathError(MathError.NULL_POINTER_EXCEPTION);
+        }
+        this.array = arr;
     }
 
     public void push(int index, RealNumbers data) throws MathError {
@@ -128,25 +138,162 @@ public class NumberArray<T extends RealNumbers> {
         return this.search(ele);
     }
 
-    public interface ForEach{
-        void run(RealNumbers ele);
+    public interface Lambda{
+        String getLambdaType();
     }
 
-    public void forEach(ForEach func){
-        for(NumberClass ele : this.array){
-            func.run((RealNumbers) ele);
+    public interface ForEach extends Lambda{
+        RealNumbers run(RealNumbers ele);
+
+        default String getLambdaType(){
+            return ForEach.class.getName();
         }
     }
 
-    public interface Map{
+    public interface Map extends Lambda{
         boolean run(RealNumbers self, RealNumbers mapVar);
+
+        default String getLambdaType(){
+            return Map.class.getName();
+        }
     }
 
-    public boolean[] map(Map mapFunc, RealNumbers mapVar){
+    private static class LambdaJob implements Runnable{
+
+        public NumberArray<?> upper;
+        public Object[] returnArray;
+        public Lambda func;
+        public final Object LOCK = new Object();
+        public Object agrs;
+        public int index;
+        public int threadCount;
+        public List<Thread> thread;
+
+        public LambdaJob(NumberArray<?> upper, Lambda func, int threadCount, Object args){
+            this.upper = upper;
+            this.func = func;
+            if(func.getLambdaType().equals(ForEach.class.getName())){
+                this.returnArray = new NumberClass[upper.getLength()];
+            }else if(func.getLambdaType().equals(Map.class.getName())){
+                this.returnArray = new Boolean[upper.getLength()];
+            }
+            this.index = 0;
+            this.threadCount = Math.min(threadCount, upper.getLength());
+            this.thread = new ArrayList<>();
+            this.agrs = args;
+            System.out.println("number of threads : " + this.threadCount);
+
+            for(int i = 0; i < this.threadCount; i++){
+                Thread t = new Thread(this);
+                t.start();
+                this.thread.add(t);
+            }
+
+        }
+
+        public int getJob(){
+            int i = -1;
+            synchronized (LOCK){
+                if (index < upper.getLength()){
+                    i = index++;
+                }
+            }
+            return i;
+        }
+
+        public void submitWork(int index, Object work){
+            this.returnArray[index] = work;
+        }
+
+        public boolean isDoneWorking(){
+            boolean done = false;
+            for(Thread t : this.thread){
+                done = !(t.isAlive());
+            }
+            return done;
+        }
+
+        @Override
+        public void run() {
+            int jobIndex = this.getJob();
+            if(this.func.getLambdaType().equals(ForEach.class.getName())){
+                ForEach function = (ForEach) this.func;
+                while(jobIndex != -1){
+                    try {
+                        this.submitWork(jobIndex, function.run(upper.get(jobIndex)));
+                    } catch (MathError mathError) {
+                        mathError.printStackTrace();
+                        this.submitWork(jobIndex, null);
+                    }
+                    jobIndex = this.getJob();
+                }
+            }else if(this.func.getLambdaType().equals(Map.class.getName())){
+                Map function = (Map) this.func;
+                while(jobIndex != -1){
+                    try {
+                        this.submitWork(jobIndex, function.run(upper.get(jobIndex), (RealNumbers) this.agrs));
+                    } catch (MathError mathError) {
+                        mathError.printStackTrace();
+                        this.submitWork(jobIndex, null);
+                    }
+                    jobIndex = this.getJob();
+                }
+            }
+        }
+    }
+
+    public NumberArray<T> forEach(ForEach func, boolean writeBack){
+        NumberArray<T> arr = new NumberArray<>(this.getLength());
+        for(int i = 0; i < this.getLength(); i++){
+            arr.array[i] = (NumberClass) func.run((RealNumbers) this.array[i]);
+        }
+        if(writeBack){
+            this.array = arr.array;
+            return this;
+        }
+        return arr;
+    }
+
+    public NumberArray<T> forEach(ForEach func, boolean writeBack, int threadCount) throws MathError {
+        LambdaJob job = new LambdaJob(this, func, threadCount, null);
+        while(!job.isDoneWorking()){
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(writeBack){
+            this.array = (NumberClass[]) job.returnArray;
+            return this;
+        }
+        return new NumberArray<>((NumberClass[]) job.returnArray);
+    }
+
+    public boolean[] map(Map func, RealNumbers mapVar){
         boolean[] map = new boolean[this.getLength()];
         for(int i = 0; i < this.getLength(); i++){
-            map[i] = mapFunc.run((RealNumbers) this.array[i], mapVar);
+            map[i] = func.run((RealNumbers) this.array[i], mapVar);
         }
+        return map;
+    }
+
+    public boolean[] map(Map func, RealNumbers mapVar, int threadCount){
+        LambdaJob job = new LambdaJob(this, func, threadCount, mapVar);
+        while(!job.isDoneWorking()){
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        boolean[] map = new boolean[this.getLength()];
+        Boolean[] ans = (Boolean[]) job.returnArray;
+        for(int i = 0; i < this.getLength(); i++){
+            map[i] = ans[i];
+        }
+
         return map;
     }
 
