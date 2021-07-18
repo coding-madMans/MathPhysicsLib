@@ -225,102 +225,6 @@ public class Func {
         }
     }
 
-    public static RealNumbers Min(RealNumbers arr[],Integer n)
-    {
-
-        RealNumbers min = new Integer(arr[0].getAsInt());
-
-        for(int i=1;i< n.getAsInt();i++)
-        {
-            if(arr[i].getAsInt() < min.getAsInt() )
-            {
-                min = arr[i];
-            }
-        }
-        return min;
-    }
-
-    public static RealNumbers Max(RealNumbers arr[],Integer n)
-    {
-
-        RealNumbers max = new Integer(arr[0].getAsInt());
-
-        for(int i=1;i< n.getAsInt();i++)
-        {
-            if(arr[i].getAsInt() > max.getAsInt() )
-            {
-                max = arr[i];
-            }
-        }
-        return max;
-    }
-
-    //MERGE SORT BEGINS
-    public static void merge(NumberArray<?> arr, int l, int m, int r) throws MathError {
-        // Find sizes of two sub-arrays to be merged
-        int n1 = m - l + 1;
-        int n2 = r - m;
-
-        /* Create temp arrays */
-        NumberArray<?> L = new NumberArray<>(n1);
-        NumberArray<?> R = new NumberArray<>(n2);
-
-
-        for (int i = 0; i < n1; ++i)
-            L.push(i, arr.get(l + i));
-        for (int j = 0; j < n2; ++j)
-            R.push(j, arr.get(m + 1 + j));
-
-        /* Merge the temp arrays */
-
-        // Initial indexes of first and second subarrays
-        int i = 0, j = 0;
-
-        // Initial index of merged subarry array
-        int k = l;
-        while (i < n1 && j < n2) {
-            if (L.get(i).getAsDouble() <= R.get(j).getAsDouble()) {
-                arr.push(k, L.get(i));
-                i++;
-            } else {
-                arr.push(k, R.get(j));
-                j++;
-            }
-            k++;
-        }
-
-        /* Copy remaining elements of L[] if any */
-        while (i < n1) {
-            arr.push(k, L.get(i));
-            i++;
-            k++;
-        }
-
-        /* Copy remaining elements of R[] if any */
-        while (j < n2) {
-            arr.push(k, R.get(j));
-            j++;
-            k++;
-        }
-    }
-
-    // Main function that sorts arr[l..r] using
-    // merge()
-    public static NumberArray<?> Sort(NumberArray<?> arr, int l, int r) throws MathError {
-        if (l < r) {
-            // Find the middle point
-            int m = l + (r - l) / 2;
-
-            // Sort first and second halves
-            Sort(arr, l, m);
-            Sort(arr, m + 1, r);
-
-            // Merge the sorted halves
-            merge(arr, l, m, r);
-        }
-     return arr;
-    }
-    //MERGE SORT END
 
     // by vasu
     /**
@@ -378,7 +282,7 @@ public class Func {
         }
         try {
             Integer n = (Integer) N, r = (Integer) R;
-            return (RealNumbers) factorial(n).div(factorial(r));
+            return (RealNumbers) factorial(n).div(factorial(new Integer(n.getAsInt()-r.getAsInt())));
         } catch (MathError mathError) {
             mathError.printStackTrace();
             return new Double(MathematicalConstants.NaN);

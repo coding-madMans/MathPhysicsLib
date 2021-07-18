@@ -4,6 +4,7 @@ import Mathamatics.MathematicalConstants;
 import Mathamatics.NumberArray;
 import Mathamatics.Numbers.Double;
 import Mathamatics.Numbers.Integer;
+import Mathamatics.Numbers.NumberClass;
 import Mathamatics.Numbers.RealNumbers;
 import utility.MathError;
 
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import static Mathamatics.BasicFormulas.Func.*;
+import static Mathamatics.NumberArray.Sort;
 
 public class BasicFuncTesting {
     public static void main(String[] args) throws MathError {
@@ -30,7 +32,15 @@ public class BasicFuncTesting {
             array.push(i, new Double(rand.nextDouble() * 100));
         }
         System.out.println(array.repr());
-        System.out.println(Sort(array, 0, 3).repr());
+        System.out.println(Sort(array, 0, 69).repr());
         RealNumbers data = fib(new Integer(2));
+
+        NumberClass[] a = array.minMax();
+        for(int i=0;i<2;i++)
+        {
+            System.out.println(a[i].repr());
+        }
+        System.out.println(NpR(new Integer(8),new Integer(2)).repr());
+        System.out.println(NcR(new Integer(8),new Integer(2)).repr());
     }
 }
