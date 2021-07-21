@@ -447,7 +447,7 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
-    public NumberSystem Clone() {
+    public RealNumbers Clone() {
         return new Double(this.num);
     }
 

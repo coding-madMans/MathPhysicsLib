@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import static Mathamatics.BasicFormulas.Func.*;
-import static Mathamatics.NumberArray.Sort;
+// import static Mathamatics.NumberArray.Sort;
 
 public class BasicFuncTesting {
     public static void main(String[] args) throws MathError {
@@ -32,7 +32,7 @@ public class BasicFuncTesting {
             array.push(i, new Double(rand.nextDouble() * 100));
         }
         System.out.println(array.repr());
-        System.out.println(Sort(array, 0, 69).repr());
+        // System.out.println(Sort(array, 0, 69).repr());
         RealNumbers data = fib(new Integer(2));
 
         NumberClass[] a = array.minMax();

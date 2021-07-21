@@ -449,7 +449,7 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
-    public NumberSystem Clone() {
+    public RealNumbers Clone() {
         return new Float(this.num);
     }
 

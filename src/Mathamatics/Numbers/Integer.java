@@ -432,7 +432,7 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
     }
 
     @Override
-    public NumberSystem Clone() {
+    public RealNumbers Clone() {
         return new Integer(this.num);
     }
 

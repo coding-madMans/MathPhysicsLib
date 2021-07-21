@@ -14,6 +14,7 @@ public interface RealNumbers extends NumberSystem{
     int getAsInt();
     long getAsLong();
     String repr();
+    RealNumbers Clone();
 
     RealNumbers add(int value);
     RealNumbers add(int value, boolean writeBack);

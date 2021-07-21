@@ -431,7 +431,7 @@ public class Long extends NumberClass implements NumberSystem,RealNumbers {
     }
 
     @Override
-    public NumberSystem Clone() {
+    public RealNumbers Clone() {
         return new Long(this.num);
     }
 

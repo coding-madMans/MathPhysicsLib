@@ -19,7 +19,6 @@ public class NumberArray<T extends RealNumbers> {
 
     public interface ForEach extends Lambda{
         RealNumbers run(RealNumbers ele);
-
         default String getLambdaType(){
             return ForEach.class.getName();
         }
@@ -27,9 +26,15 @@ public class NumberArray<T extends RealNumbers> {
 
     public interface Map extends Lambda{
         boolean run(RealNumbers self, RealNumbers mapVar);
-
         default String getLambdaType(){
             return Map.class.getName();
+        }
+    }
+
+    public interface FuncMap extends Lambda{
+        RealNumbers run(RealNumbers self, RealNumbers other);
+        default String getLambdaType(){
+            return  FuncMap.class.getName();
         }
     }
 
@@ -47,7 +52,8 @@ public class NumberArray<T extends RealNumbers> {
         public LambdaJob(NumberArray<?> upper, Lambda func, int threadCount, Object args){
             this.upper = upper;
             this.func = func;
-            if(func.getLambdaType().equals(ForEach.class.getName())){
+            if(func.getLambdaType().equals(ForEach.class.getName()) ||
+                    func.getLambdaType().equals(FuncMap.class.getName())){
                 this.returnArray = new NumberClass[upper.getLength()];
             }else if(func.getLambdaType().equals(Map.class.getName())){
                 this.returnArray = new Boolean[upper.getLength()];
@@ -104,10 +110,23 @@ public class NumberArray<T extends RealNumbers> {
                 }
             }else if(this.func.getLambdaType().equals(Map.class.getName())){
                 Map function = (Map) this.func;
+                RealNumbers mapVar = (RealNumbers) this.agrs;
                 while(jobIndex != -1){
                     try {
-                        this.submitWork(jobIndex, function.run(upper.get(jobIndex), (RealNumbers) this.agrs));
+                        this.submitWork(jobIndex, function.run(upper.get(jobIndex), mapVar));
                     } catch (MathError mathError) {
+                        mathError.printStackTrace();
+                        this.submitWork(jobIndex, null);
+                    }
+                    jobIndex = this.getJob();
+                }
+            }else if(func.getLambdaType().equals(FuncMap.class.getName())){
+                FuncMap function = (FuncMap) this.func;
+                NumberArray<?> other = (NumberArray<?>) agrs;
+                while (jobIndex != -1){
+                    try{
+                        this.submitWork(jobIndex, function.run(upper.get(jobIndex), other.get(jobIndex)));
+                    }catch (MathError mathError){
                         mathError.printStackTrace();
                         this.submitWork(jobIndex, null);
                     }
@@ -152,7 +171,7 @@ public class NumberArray<T extends RealNumbers> {
         if((index < 0) || (index >= this.array.length)){
             throw new MathError(MathError.INDEX_OUT_OF_BOUND);
         }
-        return (RealNumbers) this.array[index];
+        return (RealNumbers) this.array[index].Clone();
     }
 
     public int getLength(){
@@ -298,6 +317,41 @@ public class NumberArray<T extends RealNumbers> {
         return map;
     }
 
+    public NumberArray<T> funcMap(FuncMap funcMap, NumberArray<?> other, boolean writeBack) throws MathError {
+        if(this.getLength() != other.getLength()){
+            throw new MathError(MathError.INCORRECT_ARGUMENT_SIZE);
+        }
+        NumberArray<T> ans = new NumberArray<>(this.getLength());
+        for(int i = 0; i < this.getLength(); i++){
+            ans.array[i] = (NumberClass) funcMap.run(this.get(i), other.get(i));
+        }
+        if(writeBack){
+            this.array = ans.array;
+            return this;
+        }
+        return ans;
+    }
+
+    public NumberArray<T> funcMap(FuncMap funcMap, NumberArray<?> other, boolean writeBack, int threadCount) throws MathError {
+        if(this.getLength() != other.getLength()){
+            throw new MathError(MathError.INCORRECT_ARGUMENT_SIZE);
+        }
+        LambdaJob job = new LambdaJob(this, funcMap, threadCount, other);
+        while(!job.isDoneWorking()) {
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(writeBack){
+            this.array = (NumberClass[]) job.returnArray;
+            return this;
+        }
+        return new NumberArray<>((NumberClass[])job.returnArray);
+    }
+
     public static NumberArray<Integer> range(int size) throws MathError {
         return NumberArray.range(0, size);
     }
@@ -349,71 +403,4 @@ public class NumberArray<T extends RealNumbers> {
         }
         return fact;
     }
-
-    //MERGE SORT BEGINS
-    public static void merge(NumberArray<?> arr, int l, int m, int r) throws MathError {
-        // Find sizes of two sub-arrays to be merged
-        int n1 = m - l + 1;
-        int n2 = r - m;
-
-        /* Create temp arrays */
-        NumberArray<?> L = new NumberArray<>(n1);
-        NumberArray<?> R = new NumberArray<>(n2);
-
-
-        for (int i = 0; i < n1; ++i)
-            L.push(i, arr.get(l + i));
-        for (int j = 0; j < n2; ++j)
-            R.push(j, arr.get(m + 1 + j));
-
-        /* Merge the temp arrays */
-
-        // Initial indexes of first and second subarrays
-        int i = 0, j = 0;
-
-        // Initial index of merged subarry array
-        int k = l;
-        while (i < n1 && j < n2) {
-            if (L.get(i).getAsDouble() <= R.get(j).getAsDouble()) {
-                arr.push(k, L.get(i));
-                i++;
-            } else {
-                arr.push(k, R.get(j));
-                j++;
-            }
-            k++;
-        }
-
-        /* Copy remaining elements of L[] if any */
-        while (i < n1) {
-            arr.push(k, L.get(i));
-            i++;
-            k++;
-        }
-
-        /* Copy remaining elements of R[] if any */
-        while (j < n2) {
-            arr.push(k, R.get(j));
-            j++;
-            k++;
-        }
-    }
-
-    // Main function that sorts arr[l..r] using
-    // merge()
-    public static NumberArray<?> Sort(NumberArray<?> arr, int l, int r) throws MathError {
-        if (l < r) {
-            // Find the middle point
-            int m = l + (r - l) / 2;
-
-            // Sort first and second halves
-            Sort(arr, l, m);
-            Sort(arr, m + 1, r);
-
-            // Merge the sorted halves
-            merge(arr, l, m, r);
-        }
-        return arr;
-    }
-    //MERGE SORT END
 }
