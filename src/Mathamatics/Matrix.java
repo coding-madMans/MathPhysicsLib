@@ -173,6 +173,13 @@ public class Matrix<T extends NumberClass>{
         this.matrix[row][col] = (NumberClass) data.Clone();
     }
 
+    public NumberClass getData(int rowIndex, int columnIndex) throws MathError {
+        if((rowIndex < 0) || (rowIndex > this.getRowCount()) || (columnIndex < 0) || (columnIndex > this.getColumnCount())){
+            throw new MathError(MathError.INDEX_OUT_OF_BOUND);
+        }
+        return (NumberClass) this.matrix[rowIndex][columnIndex].Clone();
+    }
+
     public Matrix<T> mul(RealNumbers sFactor) throws MathError {
         return this.mul(sFactor, false);
     }
