@@ -55,4 +55,9 @@ public interface RealNumbers extends NumberSystem{
     RealNumbers div(long value) throws MathError;
     RealNumbers div(long value, boolean writeBack) throws MathError;
     boolean eql(long value);
+    boolean eql(NumberSystem other);
+    boolean grater(NumberSystem other);
+    boolean less(NumberSystem other);
+    boolean lessEql(NumberSystem other);
+    boolean greaterEql(NumberSystem other);
 }

@@ -156,6 +156,18 @@ public class ComplexNumber extends NumberClass implements NumberSystem{
     }
 
     @Override
+    public boolean lessEql(NumberSystem other) {
+        ComplexNumber temp = (ComplexNumber) other;
+        return (this.real <= temp.real) && (this.imaginary <= temp.imaginary);
+    }
+
+    @Override
+    public boolean greaterEql(NumberSystem other) {
+        ComplexNumber temp = (ComplexNumber) other;
+        return (this.real >= temp.real) && (this.imaginary >= temp.imaginary);
+    }
+
+    @Override
     public NumberSystem inv() {
         return this.inv(false);
     }

@@ -416,6 +416,18 @@ public class Long extends NumberClass implements NumberSystem,RealNumbers {
     }
 
     @Override
+    public boolean lessEql(NumberSystem other) {
+        Long temp = (Long) other;
+        return this.num <= temp.num;
+    }
+
+    @Override
+    public boolean greaterEql(NumberSystem other) {
+        Long temp = (Long) other;
+        return this.num >= temp.num;
+    }
+
+    @Override
     public NumberSystem inv() {
         return this.inv(false);
     }

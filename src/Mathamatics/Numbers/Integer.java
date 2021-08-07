@@ -417,6 +417,18 @@ public class Integer extends NumberClass implements NumberSystem,RealNumbers {
     }
 
     @Override
+    public boolean lessEql(NumberSystem other) {
+        Integer temp = (Integer) other;
+        return this.num <= temp.num;
+    }
+
+    @Override
+    public boolean greaterEql(NumberSystem other) {
+        Integer temp = (Integer) other;
+        return this.num >= temp.num;
+    }
+
+    @Override
     public NumberSystem inv() {
         return this.inv(false);
     }

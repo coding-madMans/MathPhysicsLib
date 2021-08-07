@@ -194,8 +194,72 @@ public class NumberArray<T extends RealNumbers> {
     }
 
     // Vishal sorting algo here vvv
-    public void sort(){}
 
+    public NumberArray sort() throws MathError {
+        return sort(false);
+
+    }
+    public NumberArray sort(boolean writeBack) throws MathError {
+        NumberArray temp = new NumberArray<T>(array);
+        _sort(temp.array, 0, temp.getLength()-1);
+        if(writeBack){
+
+            this.array = temp.array;
+
+            return this;
+        }
+        return temp;
+
+    }
+    private void _sort(NumberClass[] arr, int low, int high){
+        if(high<=low){
+            return;
+        }
+        int mid = (low+high)/2;
+        _sort(arr, low, mid);
+        _sort(arr, mid+1, high);
+
+        _mergeArray(arr,low,mid,high);
+
+    }
+    private void _mergeArray(NumberClass[] arr, int low, int mid, int high){
+        int n1 = mid - low + 1;
+        int n2 = high-mid;
+        NumberClass[] arr1 = new NumberClass[n1];
+        NumberClass[] arr2 = new NumberClass[n2];
+        for (int i = 0; i < n1; ++i)
+            arr1[i] = arr[low + i];  //if any error occurs, put .Clone()
+        for (int j = 0; j < n2; ++j)
+            arr2[j] = arr[mid + 1 + j];
+
+        int i=0, j=0;
+        int k = low;
+        while (i < n1 && j < n2) {
+            if (arr1[i].lessEql(arr2[j])) {
+                arr[k] = arr1[i];
+                i++;
+            }
+            else {
+                arr[k] = arr2[j];
+                j++;
+            }
+            k++;
+        }
+
+        /* Copy remaining elements of L[] if any */
+        while (i < n1) {
+            arr[k] = arr1[i];
+            i++;
+            k++;
+        }
+
+        /* Copy remaining elements of R[] if any */
+        while (j < n2) {
+            arr[k] = arr2[j];
+            j++;
+            k++;
+        }
+    }
     public NumberArray<T> split(int s, int e){
         return this.split(s, e, false);
     }

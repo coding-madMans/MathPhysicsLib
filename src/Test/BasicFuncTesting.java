@@ -42,5 +42,9 @@ public class BasicFuncTesting {
         }
         System.out.println(NpR(new Integer(8),new Integer(2)).repr());
         System.out.println(NcR(new Integer(8),new Integer(2)).repr());
+
+        System.out.println(array.sort(true).repr());
+
+    //    boolean[] arr = array.map((self, mapVar) -> {if (self.greaterEql(new Integer(0))&&(self.lessEql(mapVar)))})
     }
 }
