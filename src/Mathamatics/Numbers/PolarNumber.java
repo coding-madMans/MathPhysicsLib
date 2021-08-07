@@ -95,6 +95,18 @@ public class PolarNumber extends NumberClass implements  NumberSystem{
     }
 
     @Override
+    public boolean lessEql(NumberSystem other) {
+        PolarNumber temp = (PolarNumber) other;
+        return (this.angle <= temp.angle) && (this.radius <= temp.radius);
+    }
+
+    @Override
+    public boolean greaterEql(NumberSystem other) {
+        PolarNumber temp = (PolarNumber) other;
+        return (this.angle >= temp.angle) && (this.radius >= temp.radius);
+    }
+
+    @Override
     public NumberSystem inv() {
         return this.inv(false);
     }

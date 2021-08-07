@@ -434,6 +434,18 @@ public class Float extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
+    public boolean lessEql(NumberSystem other) {
+        Float temp = (Float) other;
+        return this.num <= temp.num;
+    }
+
+    @Override
+    public boolean greaterEql(NumberSystem other) {
+        Float temp = (Float) other;
+        return this.num >= temp.num;
+    }
+
+    @Override
     public NumberSystem inv() {
         return this.inv(false);
     }

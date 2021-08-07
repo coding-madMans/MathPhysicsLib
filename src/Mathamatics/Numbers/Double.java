@@ -432,6 +432,18 @@ public class Double extends NumberClass implements NumberSystem,RealNumbers{
     }
 
     @Override
+    public boolean lessEql(NumberSystem other) {
+        Double temp = (Double) other;
+        return this.num <= temp.num;
+    }
+
+    @Override
+    public boolean greaterEql(NumberSystem other) {
+        Double temp = (Double) other;
+        return this.num >= temp.num;
+    }
+
+    @Override
     public NumberSystem inv() {
         return this.inv(false);
     }

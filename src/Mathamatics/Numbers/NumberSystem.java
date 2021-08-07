@@ -19,6 +19,8 @@ public interface NumberSystem {
     boolean eql(NumberSystem other);
     boolean grater(NumberSystem other);
     boolean less(NumberSystem other);
+    boolean lessEql(NumberSystem other);
+    boolean greaterEql(NumberSystem other);
 
     NumberSystem inv();
     NumberSystem inv(boolean writeBack);
