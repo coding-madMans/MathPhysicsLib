@@ -448,8 +448,8 @@ public class NumberArray<T extends RealNumbers> {
         return new Double[]{min, max};
     }
 
-    public NumberArray<Double> factorial(){ // the elements in this.array should be sorted...
-        double max = ((Double) this.array[this.getLength() - 1]).getAsDouble();
+    public NumberArray<?> factorial(){ // the elements in this.array should be sorted...
+        int max = ((Integer) this.array[this.getLength() - 1]).getAsInt();
         NumberArray<Double> fact = new NumberArray<>(this.getLength());
         int index = 0;
         double factValue = 1.0;
@@ -457,7 +457,7 @@ public class NumberArray<T extends RealNumbers> {
             if(i != 0){
                 factValue *= i;
             }
-            while(((Double)this.array[index]).eql(i)){
+            while(((Integer)this.array[index]).eql(i)){
                 fact.array[index] = new Double(factValue);
                 index += 1;
                 if(index >= this.getLength()){
