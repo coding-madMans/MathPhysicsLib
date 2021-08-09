@@ -46,7 +46,6 @@ public class NumberArray<T extends RealNumbers> {
         private final Object LOCK = new Object();
         private final Object agrs;
         private int index;
-        private int threadCount;
         private final List<Thread> thread;
 
         public LambdaJob(NumberArray<?> upper, Lambda func, int threadCount, Object args){
@@ -59,12 +58,12 @@ public class NumberArray<T extends RealNumbers> {
                 this.returnArray = new Boolean[upper.getLength()];
             }
             this.index = 0;
-            this.threadCount = Math.min(threadCount, upper.getLength());
+            int threadCount1 = Math.min(threadCount, upper.getLength());
             this.thread = new ArrayList<>();
             this.agrs = args;
-            System.out.println("number of threads : " + this.threadCount);
+            System.out.println("number of threads : " + threadCount1);
 
-            for(int i = 0; i < this.threadCount; i++){
+            for(int i = 0; i < threadCount1; i++){
                 Thread t = new Thread(this);
                 t.start();
                 this.thread.add(t);
@@ -193,24 +192,21 @@ public class NumberArray<T extends RealNumbers> {
         return info.append("]").toString();
     }
 
-    // Vishal sorting algo here vvv
-
-    public NumberArray sort() throws MathError {
+    public NumberArray<T> sort() throws MathError {
         return sort(false);
 
     }
-    public NumberArray sort(boolean writeBack) throws MathError {
-        NumberArray temp = new NumberArray<T>(array);
+
+    public NumberArray<T> sort(boolean writeBack) throws MathError {
+        NumberArray<T> temp = new NumberArray<T>(array);
         _sort(temp.array, 0, temp.getLength()-1);
         if(writeBack){
-
             this.array = temp.array;
-
             return this;
         }
         return temp;
-
     }
+
     private void _sort(NumberClass[] arr, int low, int high){
         if(high<=low){
             return;
@@ -218,17 +214,15 @@ public class NumberArray<T extends RealNumbers> {
         int mid = (low+high)/2;
         _sort(arr, low, mid);
         _sort(arr, mid+1, high);
-
         _mergeArray(arr,low,mid,high);
-
     }
+
     private void _mergeArray(NumberClass[] arr, int low, int mid, int high){
         int n1 = mid - low + 1;
         int n2 = high-mid;
         NumberClass[] arr1 = new NumberClass[n1];
         NumberClass[] arr2 = new NumberClass[n2];
-        for (int i = 0; i < n1; ++i)
-            arr1[i] = arr[low + i];  //if any error occurs, put .Clone()
+        System.arraycopy(arr, low, arr1, 0, n1);
         for (int j = 0; j < n2; ++j)
             arr2[j] = arr[mid + 1 + j];
 
