@@ -65,38 +65,21 @@ public class Func {
     }
 
     public static RealNumbers Sin(RealNumbers a) {
-        double num = a.getAsDouble();
+        double num = (a.getAsDouble()*MathematicalConstants.PI)/180;
 
         if ((num < MathematicalConstants.Negative_Infinity) || (num > MathematicalConstants.Positive_Infinity)) {
             return new Double(MathematicalConstants.NaN);
         }
-
-        // If you can't use Math.PI neither,
-        // you'll have to create your own PI
-        //double num = (deg*MathematicalConstants.PI)/180;
-        // Fix the domain for a...
-        // Sine is a periodic function with period = 2*PI
         num %= 2 * MathematicalConstants.PI;
-        // Any negative angle can be brought back
-        // to it's equivalent positive angle
         if (num < 0) {
             num = 2 * MathematicalConstants.PI - num;
         }
-        // Also sine is an odd function...
-        // let's take advantage of it.
         int sign = 1;
         if (num > MathematicalConstants.PI) {
             num -= MathematicalConstants.PI;
             sign = -1;
         }
-        // Now a is in range [0, pi].
-        // Calculate sin(a)
-        // Set precision to fit your needs.
-        // Note that 171! > Double.MAX_VALUE, so
-        // don't set PRECISION to anything greater
-        // than 84 unless you are sure your
-        // factorial() can handle it
-        final int PRECISION = 100;
+        final int PRECISION = 84;
         double temp = 0, temp2 = temp;
         Integer i = new Integer(0);
         while((temp != MathematicalConstants.Negative_Infinity) && (i.getAsInt() < PRECISION)){
@@ -108,12 +91,12 @@ public class Func {
         return new Double(sign * temp2);
 
     }
-    public static RealNumbers Cos(RealNumbers deg){
-        return Sin(new Double(1.5708-deg.getAsDouble())); //1.5708 is 90 degrees in radians
+    public static RealNumbers Cos(RealNumbers radian){
+        return Sin(new Double(90-radian.getAsDouble()));
     }
-    public static RealNumbers Tan(RealNumbers deg) {
-        Double sinValue = new Double(Sin(deg).getAsDouble());
-        Double cosValue = new Double(Cos(deg).getAsDouble());
+    public static RealNumbers Tan(RealNumbers radian) {
+        Double sinValue = new Double(Sin(radian).getAsDouble());
+        Double cosValue = new Double(Cos(radian).getAsDouble());
         if(cosValue.getAsDouble()==0)
             return new Double(MathematicalConstants.Positive_Infinity);
 
@@ -124,22 +107,22 @@ public class Func {
             return new Double(MathematicalConstants.NaN);
         }
     }
-    public static RealNumbers Cosec(RealNumbers deg){
-        Double sinValue = new Double(Sin(deg).getAsDouble());
+    public static RealNumbers Cosec(RealNumbers radian){
+        Double sinValue = new Double(Sin(radian).getAsDouble());
         if (sinValue.getAsDouble() == 0)
             return new Double(MathematicalConstants.Positive_Infinity);
 
         return new Double(1/sinValue.getAsDouble());
     }
-    public static RealNumbers Sec(RealNumbers deg){
-        Double cosValue = new Double(Cos(deg).getAsDouble());
+    public static RealNumbers Sec(RealNumbers radian){
+        Double cosValue = new Double(Cos(radian).getAsDouble());
         if (cosValue.getAsDouble() == 0)
             return new Double(MathematicalConstants.Positive_Infinity);
         return new Double(1/cosValue.getAsDouble());
     }
-    public static RealNumbers Cot(RealNumbers deg){
-        Double sinValue = new Double(Sin(deg).getAsDouble());
-        Double cosValue = new Double(Cos(deg).getAsDouble());
+    public static RealNumbers Cot(RealNumbers radian){
+        Double sinValue = new Double(Sin(radian).getAsDouble());
+        Double cosValue = new Double(Cos(radian).getAsDouble());
         if(sinValue.getAsDouble()==0)
             return new Double(MathematicalConstants.Positive_Infinity);
 
@@ -159,23 +142,23 @@ public class Func {
         return Pow(new Double(MathematicalConstants.e),num);
     }
 
-    public static RealNumbers Sinh(RealNumbers deg)
+    public static RealNumbers Sinh(RealNumbers radian)
     {
-        //Double Value1 = new Double(Exp(deg).getAsDouble());
-        //Double Value2 = new Double(Exp(new Double(deg.inv())).getAsDouble());
-        return new Double((Exp(deg).getAsDouble()-(Exp(new Double(-deg.getAsDouble()))).getAsDouble())/2);
+        //Double Value1 = new Double(Exp(radian).getAsDouble());
+        //Double Value2 = new Double(Exp(new Double(radian.inv())).getAsDouble());
+        return new Double((Exp(radian).getAsDouble()-(Exp(new Double(-radian.getAsDouble()))).getAsDouble())/2);
     }
 
-    public static RealNumbers Cosh(RealNumbers deg)
+    public static RealNumbers Cosh(RealNumbers radian)
     {
-        return new Double((Exp(deg).getAsDouble()+(Exp(new Double(-deg.getAsDouble()))).getAsDouble())/2);
+        return new Double((Exp(radian).getAsDouble()+(Exp(new Double(-radian.getAsDouble()))).getAsDouble())/2);
     }
 
-    public static RealNumbers Tanh(RealNumbers deg)
+    public static RealNumbers Tanh(RealNumbers radian)
     {
-        Double sinValue = new Double(Sinh(deg).getAsDouble());
-        Double cosValue = new Double(Cosh(deg).getAsDouble());
-        if(Cosh(deg).getAsDouble() == 0)
+        Double sinValue = new Double(Sinh(radian).getAsDouble());
+        Double cosValue = new Double(Cosh(radian).getAsDouble());
+        if(Cosh(radian).getAsDouble() == 0)
         {
             return new Double(MathematicalConstants.Positive_Infinity);
         }
@@ -189,29 +172,29 @@ public class Func {
         }
     }
 
-    public static RealNumbers Cosech(RealNumbers deg)
+    public static RealNumbers Cosech(RealNumbers radian)
     {
-        Double sinhValue = new Double(Sinh(deg).getAsDouble());
+        Double sinhValue = new Double(Sinh(radian).getAsDouble());
         if (sinhValue.getAsDouble() == 0){
             return new Double(MathematicalConstants.Positive_Infinity);
         }
         return new Double(1/sinhValue.getAsDouble());
     }
 
-    public static RealNumbers Sech(RealNumbers deg)
+    public static RealNumbers Sech(RealNumbers radian)
     {
-        Double coshValue = new Double(Cosh(deg).getAsDouble());
+        Double coshValue = new Double(Cosh(radian).getAsDouble());
         if (coshValue.getAsDouble() == 0){
             return new Double(MathematicalConstants.Positive_Infinity);
         }
         return new Double(1/coshValue.getAsDouble());
     }
 
-    public static RealNumbers Coth(RealNumbers deg)
+    public static RealNumbers Coth(RealNumbers radian)
     {
-        Double sinValue = new Double(Sinh(deg).getAsDouble());
-        Double cosValue = new Double(Cosh(deg).getAsDouble());
-        if(Sinh(deg).getAsDouble() == 0)
+        Double sinValue = new Double(Sinh(radian).getAsDouble());
+        Double cosValue = new Double(Cosh(radian).getAsDouble());
+        if(Sinh(radian).getAsDouble() == 0)
         {
             return new Double(MathematicalConstants.Positive_Infinity);
         }

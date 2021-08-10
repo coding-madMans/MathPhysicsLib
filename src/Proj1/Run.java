@@ -47,7 +47,19 @@ public class Run{
         },false);
         t2 = System.nanoTime();
         t = t2 - t1;
-        System.out.println("Finding fibonacci for each element ( length : " + fibAns.getLength() + ") (slow method),ms : " + (t/1000000));
+        System.out.println("Finding fibonacci for each element ( length : " + fibAns.getLength() + ") (slow method,without threading) : " + (t/1000000) + "ms");
+        t1 =  System.nanoTime();
+        fibAns = findFib.forEach(ele -> {
+            try {
+                return slowFib(ele);
+            } catch (MathError mathError) {
+                mathError.printStackTrace();
+            }
+            return new Double(MathematicalConstants.NaN);
+        },false,7);
+        t2 = System.nanoTime();
+        t = t2 - t1;
+        System.out.println("Finding fibonacci for each element ( length : " + fibAns.getLength() + ") (slow method,with threading) : " + (t/1000000) + "ms");
         findFib = NumberArray.range(200);
         t1 =  System.nanoTime();
         fibAns = findFib.forEach(Func::fib,false);
@@ -77,6 +89,22 @@ public class Run{
         t2 = System.nanoTime();
         t = t2 - t1;
         System.out.println("time taken : " + (t/100000) + "ms");
+
+        //(sin30 + cos45 -tan50)/(cosec50 + sinh45 + cosh80)
+        Double _30 = new Double(30);
+        Double _50 = new Double(50);
+        Double _80 = new Double(80);
+        Double _45 = new Double(45);
+
+        Double ans = (Double) (Sin(_30).add(Cos(_45)).sub(Tan(_50))).div(Cosec(_50).add(Sinh(_45)).add(Cosh(_80)));
+        System.out.println("The answer for (sin30 + cos45 -tan50)/(cosec50 + sinh45 + cosh80) : "+ans.repr());
+
+        /*Out of 7 consonants and 4 vowels, how many words of 3 consonants and 2 vowels can be formed*/
+        // 7C3 x 4C2
+
+        RealNumbers A = (RealNumbers) NcR(new Integer(7),new Integer(3)).mul(NcR(new Integer(4),new Integer(2)));
+        System.out.println("The number of words formed from 7 consonants and 4 vowels : " + A.repr());
+
     }
 
     public static Double slowFib(RealNumbers num) throws MathError {
